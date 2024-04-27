@@ -1,33 +1,11 @@
-import useWindowSize from "../../hooks/useWindowSize";
+import { User } from "../../page/admin/AdminPage";
 import classes from "./AdminTable.module.css";
 
-export default function AdminTable() {
-  const { width } = useWindowSize();
+type AdminTableProps = {
+  membersList: User[] | null;
+};
 
-  if (width <= 767) {
-    return (
-      <div>
-        <div>
-          <div>
-            <input type="checkbox" />
-          </div>
-
-          <div>
-            <div>Aaron Miles</div>
-            <div>aaron@greektrust.com</div>
-          </div>
-
-          <div>Member</div>
-
-          <div>
-            <button>Edit</button>
-            <button>Delete</button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
+export default function AdminTable({ membersList }: AdminTableProps) {
   return (
     <table className={classes["table"]}>
       <thead className={classes["table-thead"]}>
@@ -42,42 +20,20 @@ export default function AdminTable() {
         </tr>
       </thead>
       <tbody className={classes["table-tbody"]}>
-        <tr className={classes["table-tr"]}>
-          <td className={classes["table-td"]}>
-            <input type="checkbox" />
-          </td>
-          <td className={classes["table-td"]}>Aaron Miles</td>
-          <td className={classes["table-td"]}>aaron@greektrust.com</td>
-          <td className={classes["table-td"]}>Member</td>
-          <td className={classes["table-td"]}>
-            <button>Edit</button>
-            <button>Delete</button>
-          </td>
-        </tr>
-        <tr className={classes["table-tr"]}>
-          <td className={classes["table-td"]}>
-            <input type="checkbox" />
-          </td>
-          <td className={classes["table-td"]}>Aaron Miles</td>
-          <td className={classes["table-td"]}>aaron@greektrust.com</td>
-          <td className={classes["table-td"]}>Member</td>
-          <td className={classes["table-td"]}>
-            <button>Edit</button>
-            <button>Delete</button>
-          </td>
-        </tr>
-        <tr className={classes["table-tr"]}>
-          <td className={classes["table-td"]}>
-            <input type="checkbox" />
-          </td>
-          <td className={classes["table-td"]}>Aaron Miles</td>
-          <td className={classes["table-td"]}>aaron@greektrust.com</td>
-          <td className={classes["table-td"]}>Member</td>
-          <td className={classes["table-td"]}>
-            <button>Edit</button>
-            <button>Delete</button>
-          </td>
-        </tr>
+        {membersList?.map((user) => (
+          <tr className={classes["table-tr"]} key={user.id}>
+            <td className={classes["table-td"]}>
+              <input type="checkbox" />
+            </td>
+            <td className={classes["table-td"]}>{user.name}</td>
+            <td className={classes["table-td"]}>{user.email}</td>
+            <td className={classes["table-td"]}>{user.role}</td>
+            <td className={classes["table-td"]}>
+              <button>Edit</button>
+              <button>Delete</button>
+            </td>
+          </tr>
+        ))}
       </tbody>
     </table>
   );
