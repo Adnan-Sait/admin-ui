@@ -7,6 +7,8 @@
   --app-color-primary-dark-300: #515152;
   --app-color-primary-dark-500: #1e1e1f;
   --app-color-primary-dark-600: #161617;
+  --app-color-accent-yellow-300: #eba83d;
+  --app-color-accent-yellow-200: #eeb355;
 
   /* Sizes */
   --app-sizes-size-10: 0.625rem;
@@ -61,4 +63,8 @@ body {
 
 .container {
   margin-inline: 28px;
+}
+
+.text-center {
+  text-align: center !important;
 }

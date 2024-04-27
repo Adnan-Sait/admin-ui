@@ -1,4 +1,9 @@
+import classNames from "classnames";
 import { User } from "../../page/admin/AdminPage";
+import Button from "../../ui/Button/Button";
+import PencilSquare from "../../ui/icons/PencilSquare";
+import Trash from "../../ui/icons/Trash";
+
 import classes from "./AdminTable.module.css";
 
 type AdminTableProps = {
@@ -10,27 +15,37 @@ export default function AdminTable({ membersList }: AdminTableProps) {
     <table className={classes["table"]}>
       <thead className={classes["table-thead"]}>
         <tr className={classes["table-tr"]}>
-          <th className={classes["table-th"]}>
+          <th className={classNames(classes["table-th"], "text-center")}>
             <input type="checkbox" />
           </th>
           <th className={classes["table-th"]}>Name</th>
           <th className={classes["table-th"]}>Email</th>
           <th className={classes["table-th"]}>Role</th>
-          <th className={classes["table-th"]}>Actions</th>
+          <th className={classNames(classes["table-th"], "text-center")}>
+            Actions
+          </th>
         </tr>
       </thead>
       <tbody className={classes["table-tbody"]}>
         {membersList?.map((user) => (
           <tr className={classes["table-tr"]} key={user.id}>
-            <td className={classes["table-td"]}>
+            <td className={classNames(classes["table-td"], "text-center")}>
               <input type="checkbox" />
             </td>
             <td className={classes["table-td"]}>{user.name}</td>
             <td className={classes["table-td"]}>{user.email}</td>
-            <td className={classes["table-td"]}>{user.role}</td>
+            <td className={classNames(classes["table-td"], classes["td-role"])}>
+              {user.role}
+            </td>
             <td className={classes["table-td"]}>
-              <button>Edit</button>
-              <button>Delete</button>
+              <div className={classes["button-wrapper"]}>
+                <Button variant="icon" className="">
+                  <PencilSquare />
+                </Button>
+                <Button variant="icon" className="">
+                  <Trash />
+                </Button>
+              </div>
             </td>
           </tr>
         ))}

@@ -1,14 +1,19 @@
+:root {
+  --app-table-border-color: var(--app-color-accent-yellow-200);
+}
+
 .table {
   table-layout: fixed;
   width: 100%;
   border-collapse: collapse;
-  border-top: 3px solid #000;
-  border-bottom: 3px solid #000;
+  border-top: 3px solid var(--app-table-border-color);
+  border-bottom: 3px solid var(--app-table-border-color);
 }
 
 .table-th,
 .table-td {
   padding-inline: 5px;
+  text-align: left;
 }
 
 .table-th {
@@ -37,14 +42,28 @@
 
 .table-td {
   padding-block: 10px;
-  text-align: center;
   word-wrap: break-word;
 }
 
 .table-thead .table-tr {
-  border-bottom: 3px solid #000;
+  border-bottom: 3px solid var(--app-table-border-color);
 }
 
 .table-tbody .table-tr:not(:last-child) {
-  border-bottom: 2px solid #000;
+  border-bottom: 2px solid var(--app-table-border-color);
+}
+
+.td-role {
+  text-transform: capitalize;
+}
+
+.button-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.button-wrapper :global(.icon) {
+  color: var(--app-color-text-white);
 }
