@@ -1,0 +1,10 @@
+.button {
+  cursor: pointer;
+  border-radius: var(--app-border-radius-medium);
+}
+
+.variant--icon {
+  padding: 5px;
+  background-color: transparent;
+  border: none;
+}

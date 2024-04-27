@@ -1,0 +1,16 @@
+.header {
+  min-height: 70px;
+  background-color: var(--app-color-primary-dark-500);
+  padding-block: 10px;
+  margin-bottom: 20px;
+
+  display: flex;
+  align-items: center;
+}
+
+.title {
+  color: var(--app-color-accent-yellow);
+  font-size: var(--app-sizes-size-30);
+  font-weight: var(--app-font-weight-600);
+  letter-spacing: 1px;
+}

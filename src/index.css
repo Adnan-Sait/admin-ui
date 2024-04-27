@@ -1,0 +1,64 @@
+:root {
+  /* Colors */
+  --app-color-primary-dark: #252527;
+  --app-color-primary-light: #edecdd;
+  --app-color-accent-yellow: #e6920c;
+  --app-color-text-white: #faf9f6;
+  --app-color-primary-dark-300: #515152;
+  --app-color-primary-dark-500: #1e1e1f;
+  --app-color-primary-dark-600: #161617;
+
+  /* Sizes */
+  --app-sizes-size-10: 0.625rem;
+  --app-sizes-size-12: 0.75rem;
+  --app-sizes-size-14: 0.875rem;
+  --app-sizes-size-16: 1rem;
+  --app-sizes-size-18: 1.125rem;
+  --app-sizes-size-20: 1.25rem;
+  --app-sizes-size-24: 1.5rem;
+  --app-sizes-size-30: 1.875rem;
+  --app-sizes-size-36: 2.25rem;
+  --app-sizes-size-44: 2.75rem;
+  --app-sizes-size-52: 3.25rem;
+  --app-sizes-size-62: 3.875rem;
+  --app-sizes-size-74: 4.625rem;
+  --app-sizes-size-86: 5.375rem;
+  --app-sizes-size-98: 6.125rem;
+
+  /* Font Weight */
+  --app-font-weight-400: 400;
+  --app-font-weight-500: 500;
+  --app-font-weight-600: 600;
+  --app-font-weight-700: 700;
+
+  /* Border */
+  --app-border-radius-medium: 5px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  font-family: "Inter", sans-serif;
+}
+
+body {
+  background-color: var(--app-color-primary-dark);
+  color: var(--app-color-text-white);
+}
+
+#root {
+  min-height: 100vh; /* Added for browser compatibility */
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  margin-inline: 28px;
+}
