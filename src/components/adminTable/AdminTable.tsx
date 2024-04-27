@@ -39,10 +39,10 @@ export default function AdminTable({ membersList }: AdminTableProps) {
             </td>
             <td className={classes["table-td"]}>
               <div className={classes["button-wrapper"]}>
-                <Button variant="icon" className="">
+                <Button variant="icon">
                   <PencilSquare />
                 </Button>
-                <Button variant="icon" className="">
+                <Button variant="icon" className={classes["trash-icon"]}>
                   <Trash />
                 </Button>
               </div>

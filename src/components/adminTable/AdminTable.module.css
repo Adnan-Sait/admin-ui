@@ -67,3 +67,7 @@
 .button-wrapper :global(.icon) {
   color: var(--app-color-text-white);
 }
+
+.button-wrapper .trash-icon :global(.icon) {
+  color: var(--app-color-red);
+}
