@@ -17,7 +17,22 @@
   background-color: var(--app-color-accent-yellow);
 }
 
+.variant--secondary {
+  background-color: transparent;
+  border: 2px solid var(--app-color-accent-yellow);
+}
+
+.variant--secondary:hover {
+  background-color: var(--app-color-shadow-accent-yellow-100);
+}
+
 .variant--icon {
   background-color: transparent;
   border: none;
+}
+
+.button:disabled {
+  border-color: #ccc;
+  opacity: 0.5;
+  pointer-events: none;
 }
