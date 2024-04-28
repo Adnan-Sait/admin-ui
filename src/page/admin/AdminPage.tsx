@@ -5,6 +5,8 @@ import useQuery from "../../hooks/useQuery";
 import Pagination from "../../components/pagination/Pagination";
 
 import classes from "./AdminPage.module.css";
+import useAdminTableContext from "../../hooks/context/useAdminTableContext";
+import { useEffect } from "react";
 
 export type User = {
   id: string;
@@ -14,11 +16,31 @@ export type User = {
 };
 
 export default function AdminPage() {
-  const {
-    data: members,
-    error,
-    isLoading,
-  } = useQuery<User[] | null>(getMembers);
+  const itemsPerPage = 10;
+  const { data, error, isLoading } = useQuery<User[] | null>(getMembers);
+
+  const { members, setMembers, activePage } = useAdminTableContext();
+  const [startCount, endCount, paginatedData] = getPaginatedData();
+
+  useEffect(() => {
+    if (!error && data) {
+      setMembers(data);
+    }
+  }, [data, error, setMembers]);
+
+  function getPaginatedData(): [number, number, User[]] | [] {
+    if (!members || !activePage) return [];
+
+    const startIndex = (activePage - 1) * itemsPerPage;
+    const endIndex = Math.min(activePage * itemsPerPage, members.length);
+
+    const slicedData = [];
+    for (let index = startIndex; index < endIndex; index++) {
+      slicedData.push(members[index]);
+    }
+
+    return [startIndex + 1, endIndex, slicedData];
+  }
 
   if (isLoading) {
     return "loading";
@@ -30,10 +52,10 @@ export default function AdminPage() {
 
   return (
     <div>
-      <AdminHeader />
-      <AdminTable membersList={members} />
+      <AdminHeader startItem={startCount ?? 0} endItem={endCount ?? 0} />
+      <AdminTable membersList={paginatedData} />
       <aside className={classes["pagination-container"]}>
-        <Pagination activePage={1} itemsPerPage={10} totalItems={52} />
+        <Pagination itemsPerPage={itemsPerPage} />
       </aside>
     </div>
   );

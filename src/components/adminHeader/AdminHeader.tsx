@@ -4,7 +4,12 @@ import MagnifyingGlass from "../../ui/icons/MagnifyingGlass";
 import RowCount from "../rowCount/RowCount";
 import classes from "./AdminHeader.module.css";
 
-export default function AdminHeader() {
+type AdminHeaderProps = {
+  startItem: number;
+  endItem: number;
+};
+
+export default function AdminHeader({ startItem, endItem }: AdminHeaderProps) {
   return (
     <aside className={classes["admin-header"]}>
       <form className={classes["search-form"]}>
@@ -34,7 +39,9 @@ export default function AdminHeader() {
           </Button>
         </section>
       </form>
-      <RowCount startCount={1} itemsPerPage={10} totalCount={52} />
+      {startItem > 0 && endItem > 0 && (
+        <RowCount startCount={startItem} endCount={endItem} />
+      )}
     </aside>
   );
 }

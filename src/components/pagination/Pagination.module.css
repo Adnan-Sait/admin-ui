@@ -9,3 +9,7 @@
   color: var(--app-color-text-white);
   border-radius: var(--app-border-radius-rounded);
 }
+
+.pagination .active {
+  background-color: var(--app-color-accent-yellow-200);
+}

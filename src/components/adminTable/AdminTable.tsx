@@ -7,7 +7,7 @@ import Trash from "../../ui/icons/Trash";
 import classes from "./AdminTable.module.css";
 
 type AdminTableProps = {
-  membersList: User[] | null;
+  membersList: User[] | undefined;
 };
 
 export default function AdminTable({ membersList }: AdminTableProps) {
