@@ -1,3 +1,5 @@
+/* TODO: Implement smooth scroll */
+
 :root {
   /* Colors */
   --app-color-primary-dark: #252527;
@@ -10,7 +12,11 @@
   --app-color-accent-yellow-300: #eba83d;
   --app-color-accent-yellow-200: #eeb355;
   --app-color-accent-yellow-100: #f3c986;
+  --app-color-danger-red: #b91c1c;
+  --app-color-danger-red-500: #991b1b;
+  --app-color-danger-red-600: #7f1d1d;
   --app-color-red: #f11111;
+  --app-color-gray-400: #9ca3af;
 
   --app-color-shadow-accent-yellow-100: rgb(243 201 134 / 40%);
 
@@ -50,7 +56,9 @@
   margin: 0;
 }
 
-html {
+html,
+input,
+button {
   font-family: "Inter", sans-serif;
 }
 

@@ -4,7 +4,7 @@ import classNames from "classnames";
 import classes from "./Button.module.css";
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: "primary" | "secondary" | "icon";
+  variant?: "primary" | "secondary" | "danger" | "icon";
   className?: string;
 };
 
