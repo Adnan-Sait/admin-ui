@@ -9,7 +9,7 @@ import classes from "./AdminSearch.module.css";
 export default function AdminSearch() {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [params, setParams] = useQueryParams();
-  const searchInput = params.get("search") ?? "";
+  const searchTerm = params.get("search") ?? "";
 
   function handleFormSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -51,12 +51,12 @@ export default function AdminSearch() {
         type="text"
         name="search"
         placeholder="Search by name, email or role"
-        value={searchInput}
+        value={searchTerm}
         onChange={handleSearchInput}
       />
 
       <section className={classes["search-icon-group"]}>
-        {searchInput.length > 0 && (
+        {searchTerm.length > 0 && (
           <Button
             variant="icon"
             type="button"
@@ -71,7 +71,7 @@ export default function AdminSearch() {
           variant="icon"
           type="submit"
           className={classes["search-icon"]}
-          aria-label="Search for"
+          aria-label={`Search for ${searchTerm}`}
         >
           <MagnifyingGlass />
         </Button>
