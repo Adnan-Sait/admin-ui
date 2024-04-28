@@ -13,7 +13,7 @@ export default function MagnifyingGlass({ className, ...params }: SvgIconProp) {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       fill="currentColor"
-      className={classNames(className, classes.icon, "icon w-4 h-4")}
+      className={classNames(className, classes.icon, "icon")}
       {...params}
     >
       <path

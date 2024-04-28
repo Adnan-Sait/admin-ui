@@ -11,7 +11,7 @@ export default function Trash({ className, ...params }: SvgIconProp) {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className={classNames(className, classes.icon, "icon w-4 h-4")}
+      className={classNames(className, classes.icon, "icon")}
       {...params}
     >
       <path
