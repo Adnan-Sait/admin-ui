@@ -71,3 +71,11 @@
 .button-wrapper .trash-icon :global(.icon) {
   color: var(--app-color-red);
 }
+
+.delete-btn-wrapper {
+  margin-top: 10px;
+}
+
+.delete-button {
+  white-space: pre;
+}
