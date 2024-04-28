@@ -6,6 +6,7 @@ import DoubleChevronLeft from "../../ui/icons/DoubleChevronLeft";
 import DoubleChevronRight from "../../ui/icons/DoubleChevronRight";
 
 import classes from "./Pagination.module.css";
+import { useEffect } from "react";
 
 type PaginationProps = {
   activePage: number;
@@ -23,6 +24,12 @@ export default function Pagination({
   const startPage = 1;
   const lastPage = Math.ceil(totalCount / itemsPerPage);
   const pages = generatePageNumbers();
+
+  useEffect(() => {
+    if (activePage > lastPage) {
+      setActivePage(lastPage);
+    }
+  }, [activePage, lastPage, setActivePage]);
 
   function generatePageNumbers() {
     const tempPages: number[] = [];

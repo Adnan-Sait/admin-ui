@@ -6,6 +6,7 @@
 }
 
 .pagination :global(button) {
+  padding: 5px;
   color: var(--app-color-text-white);
   border-radius: var(--app-border-radius-rounded);
 }
