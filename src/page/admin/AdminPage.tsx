@@ -44,6 +44,10 @@ export default function AdminPage() {
     }
   }, [data, error, setMembers]);
 
+  useEffect(() => {
+    setActivePage(1);
+  }, [searchTerm, setActivePage]);
+
   function getPaginatedData(): [number, number, User[]] | [] {
     if (!filteredMembers || !activePage) return [];
 
