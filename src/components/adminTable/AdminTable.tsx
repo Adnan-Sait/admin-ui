@@ -4,12 +4,19 @@ import { User } from "../../page/admin/AdminPage";
 import Button from "../../ui/Button/Button";
 import PencilSquare from "../../ui/icons/PencilSquare";
 import Trash from "../../ui/icons/Trash";
+import useAdminTableContext from "../../hooks/context/useAdminTableContext";
 
 type AdminTableProps = {
   membersList: User[] | undefined;
 };
 
 export default function AdminTable({ membersList }: AdminTableProps) {
+  const { removeMembers, updateMember } = useAdminTableContext();
+
+  function handleMemberDelete(memberId: string) {
+    removeMembers([memberId]);
+  }
+
   return (
     <table className={classes["table"]}>
       <thead className={classes["table-thead"]}>
@@ -41,7 +48,11 @@ export default function AdminTable({ membersList }: AdminTableProps) {
                 <Button variant="icon">
                   <PencilSquare />
                 </Button>
-                <Button variant="icon" className={classes["trash-icon"]}>
+                <Button
+                  variant="icon"
+                  className={classes["trash-icon"]}
+                  onClick={handleMemberDelete.bind(null, user.id)}
+                >
                   <Trash />
                 </Button>
               </div>
