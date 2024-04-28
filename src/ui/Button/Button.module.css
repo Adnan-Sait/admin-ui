@@ -4,10 +4,20 @@
   align-items: center;
   cursor: pointer;
   border-radius: var(--app-border-radius-medium);
+  padding: 5px;
+  transition: all 0.3s ease-in, border 0s, outline 0s;
+}
+
+.variant--primary {
+  background-color: var(--app-color-accent-yellow-200);
+  border: 2px solid var(--app-color-accent-yellow);
+}
+
+.variant--primary:hover {
+  background-color: var(--app-color-accent-yellow);
 }
 
 .variant--icon {
-  padding: 5px;
   background-color: transparent;
   border: none;
 }
