@@ -1,5 +1,5 @@
 import AdminHeader from "../../components/adminHeader/AdminHeader";
-import AdminTable from "../../components/adminTable/AdminTable";
+import MembersDisplay from "../../components/adminTable/MembersDisplay";
 import { getMembers } from "../../services/userService";
 import useQuery from "../../hooks/useQuery";
 import Pagination from "../../components/pagination/Pagination";
@@ -53,7 +53,7 @@ export default function AdminPage() {
   return (
     <div>
       <AdminHeader startItem={startCount ?? 0} endItem={endCount ?? 0} />
-      <AdminTable membersList={paginatedData} />
+      <MembersDisplay membersList={paginatedData} />
       <aside className={classes["pagination-container"]}>
         <Pagination itemsPerPage={itemsPerPage} />
       </aside>

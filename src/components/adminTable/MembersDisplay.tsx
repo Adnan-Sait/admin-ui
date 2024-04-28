@@ -6,11 +6,11 @@ import Trash from "../../ui/icons/Trash";
 
 import classes from "./AdminTable.module.css";
 
-type AdminTableProps = {
+type MembersDisplay = {
   membersList: User[] | undefined;
 };
 
-export default function AdminTable({ membersList }: AdminTableProps) {
+export default function MembersDisplay({ membersList }: MembersDisplay) {
   return (
     <table className={classes["table"]}>
       <thead className={classes["table-thead"]}>
