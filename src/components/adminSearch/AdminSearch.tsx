@@ -20,13 +20,13 @@ export default function AdminSearch() {
   }
 
   function handleSearchInput(event: ChangeEvent<HTMLInputElement>) {
-    const val = event.target.value.trim();
+    const val = event.target.value;
     updateSearchParam(val);
   }
 
   function updateSearchParam(searchText: string) {
     setParams((state) => {
-      if (searchText) {
+      if (searchText && searchText.trim().length > 0) {
         state.set("search", searchText);
       } else {
         state.delete("search");

@@ -27,7 +27,7 @@ export default function useQueryParams(): [
         const [key, value] = item.split("=");
 
         if (key) {
-          paramsMap.set(key, value ?? "");
+          paramsMap.set(key, decodeURIComponent(value) ?? "");
         }
       }
 
@@ -53,7 +53,7 @@ export default function useQueryParams(): [
     const paramList: string[] = [];
     updatedParams.forEach((value, key) => {
       if (key) {
-        paramList.push(`${key}=${value}`);
+        paramList.push(`${key}=${encodeURIComponent(value)}`);
       }
     });
 
