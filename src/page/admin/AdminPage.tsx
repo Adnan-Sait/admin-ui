@@ -1,5 +1,5 @@
 import AdminHeader from "../../components/adminHeader/AdminHeader";
-import MembersDisplay from "../../components/adminTable/MembersDisplay";
+import MembersDisplay from "../../components/membersDisplay/MembersDisplay";
 import { getMembers } from "../../services/userService";
 import useQuery from "../../hooks/useQuery";
 import Pagination from "../../components/pagination/Pagination";
