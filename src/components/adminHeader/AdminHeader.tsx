@@ -1,6 +1,7 @@
 import Button from "../../ui/Button/Button";
 import CloseMark from "../../ui/icons/CloseMark";
 import MagnifyingGlass from "../../ui/icons/MagnifyingGlass";
+import RowCount from "../rowCount/RowCount";
 import classes from "./AdminHeader.module.css";
 
 export default function AdminHeader() {
@@ -33,7 +34,7 @@ export default function AdminHeader() {
           </Button>
         </section>
       </form>
-      <span>Page</span>
+      <RowCount startCount={1} itemsPerPage={10} totalCount={52} />
     </aside>
   );
 }
