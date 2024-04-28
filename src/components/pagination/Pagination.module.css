@@ -1,0 +1,11 @@
+.pagination {
+  display: grid;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  gap: 10px;
+}
+
+.pagination :global(button) {
+  color: var(--app-color-text-white);
+  border-radius: var(--app-border-radius-rounded);
+}

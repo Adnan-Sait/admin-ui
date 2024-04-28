@@ -36,6 +36,7 @@
 
   /* Border */
   --app-border-radius-medium: 5px;
+  --app-border-radius-rounded: 50%;
 }
 
 *,
