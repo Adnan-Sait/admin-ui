@@ -1,5 +1,4 @@
 import classNames from "classnames";
-import useAdminTableContext from "../../hooks/context/useAdminTableContext";
 import Button from "../../ui/Button/Button";
 import ChevronLeft from "../../ui/icons/ChevronLeft";
 import ChevronRight from "../../ui/icons/ChevronRight";
@@ -9,14 +8,20 @@ import DoubleChevronRight from "../../ui/icons/DoubleChevronRight";
 import classes from "./Pagination.module.css";
 
 type PaginationProps = {
+  activePage: number;
   itemsPerPage: number;
+  totalCount: number;
+  setActivePage: React.Dispatch<React.SetStateAction<number>>;
 };
 
-export default function Pagination({ itemsPerPage }: PaginationProps) {
-  const { activePage, setActivePage, totalLength } = useAdminTableContext();
-
+export default function Pagination({
+  itemsPerPage,
+  activePage,
+  totalCount,
+  setActivePage,
+}: PaginationProps) {
   const startPage = 1;
-  const lastPage = Math.ceil(totalLength / itemsPerPage);
+  const lastPage = Math.ceil(totalCount / itemsPerPage);
   const pages = generatePageNumbers();
 
   function generatePageNumbers() {
