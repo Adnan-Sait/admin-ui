@@ -48,6 +48,10 @@ export default function AdminPage() {
     setActivePage(1);
   }, [searchTerm, setActivePage]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [activePage]);
+
   function getPaginatedData(): [number, number, User[]] | [] {
     if (!filteredMembers || !activePage) return [];
 
@@ -85,7 +89,7 @@ export default function AdminPage() {
     const memberIds: string[] = [];
 
     searchDataset.forEach((value, key) => {
-      if (value.toLowerCase().includes(searchTerm.toLowerCase())) {
+      if (value.toLowerCase().includes(searchTerm.trim().toLowerCase())) {
         memberIds.push(key);
       }
     });
