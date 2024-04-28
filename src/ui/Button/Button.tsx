@@ -13,6 +13,7 @@ export default function Button({
   className,
   variant = "primary",
   disabled,
+  type = "button",
   ...attrs
 }: PropsWithChildren<ButtonProps>) {
   return (
@@ -24,6 +25,7 @@ export default function Button({
         { "no-transition": disabled }
       )}
       tabIndex={0}
+      type={type}
       disabled={disabled}
       {...attrs}
     >
