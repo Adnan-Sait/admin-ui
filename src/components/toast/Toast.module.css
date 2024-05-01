@@ -1,0 +1,53 @@
+.toast {
+  display: flex;
+  flex-direction: column;
+
+  border: none;
+  border-left: 5px solid transparent;
+  border-radius: var(--app-border-radius-medium);
+  overflow: hidden;
+
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.toast--primary {
+  color: var(--app-color-primary-dark);
+  background-color: var(--app-color-accent-yellow-300);
+  border-color: var(--app-color-accent-yellow-600);
+}
+
+.toast :global(h3) {
+  font-size: var(--app-sizes-size-14);
+  font-weight: var(--app-font-weight-500);
+  padding: 10px;
+}
+
+.toast :global(button) {
+  font-size: var(--app-sizes-size-12);
+  padding-inline: 15px;
+}
+
+progress.progress {
+  width: 100%;
+}
+
+progress.progress[value]::-webkit-progress-bar,
+progress.progress[value]::-webkit-progress-value {
+  border-top-right-radius: var(--app-border-radius-medium);
+  border-bottom-right-radius: var(--app-border-radius-medium);
+}
+
+progress.progress[value]::-moz-progress-bar,
+progress.progress[value]::-moz-progress-value {
+  border-top-right-radius: var(--app-border-radius-medium);
+  border-bottom-right-radius: var(--app-border-radius-medium);
+}
+
+.toast-body {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+}
