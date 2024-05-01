@@ -72,6 +72,10 @@
   color: var(--app-color-red);
 }
 
+.form-input {
+  width: 80%;
+}
+
 .delete-btn-wrapper {
   margin-top: 10px;
 }

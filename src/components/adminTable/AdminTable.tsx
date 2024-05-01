@@ -155,13 +155,27 @@ export default function AdminTable({ membersList }: AdminTableProps) {
       <tr className={classes["table-tr"]} key={`${user.id}-edit`}>
         <td className={classNames(classes["table-td"], "text-center")}></td>
         <td className={classes["table-td"]}>
-          <input type="text" name="name" value={user.name} />
+          <input
+            className={classes["form-input"]}
+            type="text"
+            name="name"
+            value={user.name}
+          />
         </td>
         <td className={classes["table-td"]}>
-          <input type="text" name="email" value={user.email} />
+          <input
+            className={classes["form-input"]}
+            type="text"
+            name="email"
+            value={user.email}
+          />
         </td>
         <td className={classNames(classes["table-td"], classes["td-role"])}>
-          <select name="role" value={user.role}>
+          <select
+            className={classes["form-input"]}
+            name="role"
+            value={user.role}
+          >
             <option value="member">Member</option>
             <option value="admin">Admin</option>
           </select>

@@ -14,7 +14,7 @@
   transform: translateY(-50%);
 }
 
-.search-input {
+input.search-input {
   font-size: 14px;
   height: 30px;
   background-color: var(--app-color-primary-dark);
