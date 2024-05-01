@@ -6,7 +6,8 @@
   --app-color-primary-light: #edecdd;
   --app-color-accent-yellow: #e6920c;
   --app-color-text-white: #faf9f6;
-  --app-color-primary-dark-300: #515152;
+  --app-color-primary-dark-200: #515152;
+  --app-color-primary-dark-300: #3b3b3d;
   --app-color-primary-dark-500: #1e1e1f;
   --app-color-primary-dark-600: #161617;
   --app-color-accent-yellow-300: #eba83d;
@@ -19,6 +20,7 @@
   --app-color-gray-400: #9ca3af;
 
   --app-color-shadow-accent-yellow-100: rgb(243 201 134 / 40%);
+  --app-color-shadow-accent-yellow-200: rgb(230 146 12 / 40%);
 
   /* Sizes */
   --app-sizes-size-10: 0.625rem;
@@ -44,6 +46,7 @@
   --app-font-weight-700: 700;
 
   /* Border */
+  --app-border-radius-small: 2px;
   --app-border-radius-medium: 5px;
   --app-border-radius-rounded: 50%;
 }

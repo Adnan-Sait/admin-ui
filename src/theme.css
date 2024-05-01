@@ -1,0 +1,14 @@
+*:focus {
+  outline: none;
+  box-shadow: 0 0 2px 4px var(--app-color-shadow-accent-yellow-200);
+}
+
+input[type="text"],
+select {
+  color: var(--app-color-text-white);
+  background-color: var(--app-color-primary-dark-300);
+  border: none;
+  border-bottom: 2px solid var(--app-color-accent-yellow);
+  border-radius: var(--app-border-radius-small);
+  padding: 5px;
+}
