@@ -1,5 +1,3 @@
-/* TODO: Implement smooth scroll */
-
 :root {
   /* Colors */
   --app-color-primary-dark: #252527;
@@ -62,6 +60,7 @@
 
 html {
   font-family: "Inter", sans-serif;
+  scroll-behavior: smooth;
 }
 
 body {
