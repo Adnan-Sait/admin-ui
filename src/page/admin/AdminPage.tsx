@@ -10,11 +10,13 @@ import Pagination from "../../components/pagination/Pagination";
 
 import classes from "./AdminPage.module.css";
 
+export type userRole = "member" | "admin";
+
 export type User = {
   id: string;
   name: string;
   email: string;
-  role: "member" | "admin";
+  role: userRole;
 };
 
 export default function AdminPage() {

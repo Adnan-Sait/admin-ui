@@ -1,14 +1,16 @@
 import {
   ChangeEvent,
+  MouseEvent,
   PropsWithChildren,
   SyntheticEvent,
   useEffect,
+  useRef,
   useState,
 } from "react";
 import classNames from "classnames";
 
 import useAdminTableContext from "../../hooks/context/useAdminTableContext";
-import { User } from "../../page/admin/AdminPage";
+import { User, userRole } from "../../page/admin/AdminPage";
 import Button from "../../ui/Button/Button";
 import PencilSquare from "../../ui/icons/PencilSquare";
 import Trash from "../../ui/icons/Trash";
@@ -40,18 +42,24 @@ function FormTableWrapper({
 }
 
 export default function AdminTable({ membersList }: AdminTableProps) {
-  const { removeMembers } = useAdminTableContext();
+  const tableRef = useRef<HTMLTableElement | null>(null);
+
+  const { activePage, removeMembers, updateMember } = useAdminTableContext();
 
   const [selectedMemberIds, setSelectedMemberIds] = useState<Set<string>>(
     new Set()
   );
-  const [newMemberDetails, setNewMemberDetails] = useState<User | null>(null);
+  const [editId, setEditId] = useState<string | null>(null);
 
   const membersListLength = membersList?.length ?? 0;
 
   useEffect(() => {
     setSelectedMemberIds(new Set());
   }, [membersList]);
+
+  useEffect(() => {
+    tableRef.current?.focus();
+  }, [activePage]);
 
   function handleMemberDelete(memberId: string) {
     removeMembers([memberId]);
@@ -91,9 +99,10 @@ export default function AdminTable({ membersList }: AdminTableProps) {
     removeMembers(Array.from(selectedMemberIds));
   }
 
-  function handleEditUser(member: User) {
-    setNewMemberDetails(null);
-    setNewMemberDetails({ ...member });
+  function handleEditUser(event: MouseEvent<HTMLButtonElement>, member: User) {
+    event.preventDefault();
+
+    setEditId(member.id);
   }
 
   function handleMemberUpdate(
@@ -101,16 +110,33 @@ export default function AdminTable({ membersList }: AdminTableProps) {
   ) {
     event.preventDefault();
 
-    console.log(event.nativeEvent.submitter?.getAttribute("data-edit-element"));
+    const formEl = event.currentTarget;
+    const name = (formEl.elements.namedItem("name") as HTMLInputElement).value;
+    const email = (formEl.elements.namedItem("email") as HTMLInputElement)
+      .value;
+    const role = (formEl.elements.namedItem("role") as HTMLSelectElement)
+      .value as userRole;
+
+    if (!editId) return;
+
+    const updatedMember: User = {
+      id: editId,
+      name,
+      email,
+      role,
+    };
+
+    updateMember(updatedMember);
+    setEditId(null);
   }
 
   function handleCloseEdit() {
-    setNewMemberDetails(null);
+    setEditId(null);
   }
 
   function renderUserRow(user: User) {
-    if (newMemberDetails?.id === user.id) {
-      return renderEditRows(newMemberDetails);
+    if (editId === user.id) {
+      return renderEditRows(user);
     }
 
     return renderDetailsRow(user);
@@ -118,7 +144,7 @@ export default function AdminTable({ membersList }: AdminTableProps) {
 
   function renderDetailsRow(user: User) {
     return (
-      <tr className={classes["table-tr"]} key={user.id}>
+      <>
         <td className={classNames(classes["table-td"], "text-center")}>
           <input
             type="checkbox"
@@ -133,7 +159,10 @@ export default function AdminTable({ membersList }: AdminTableProps) {
         </td>
         <td className={classes["table-td"]}>
           <div className={classes["button-wrapper"]}>
-            <Button variant="icon" onClick={handleEditUser.bind(null, user)}>
+            <Button
+              variant="icon"
+              onClick={(event) => handleEditUser(event, user)}
+            >
               <PencilSquare />
             </Button>
             <Button
@@ -145,21 +174,22 @@ export default function AdminTable({ membersList }: AdminTableProps) {
             </Button>
           </div>
         </td>
-      </tr>
+      </>
     );
   }
 
   function renderEditRows(user: User) {
     return (
       // Using a separate key to ensure that the `edit` event does not propogate to the form as submit event.
-      <tr className={classes["table-tr"]} key={`${user.id}-edit`}>
+      <>
         <td className={classNames(classes["table-td"], "text-center")}></td>
         <td className={classes["table-td"]}>
           <input
             className={classes["form-input"]}
+            autoFocus
             type="text"
             name="name"
-            value={user.name}
+            defaultValue={user.name}
           />
         </td>
         <td className={classes["table-td"]}>
@@ -167,14 +197,14 @@ export default function AdminTable({ membersList }: AdminTableProps) {
             className={classes["form-input"]}
             type="text"
             name="email"
-            value={user.email}
+            defaultValue={user.email}
           />
         </td>
         <td className={classNames(classes["table-td"], classes["td-role"])}>
           <select
             className={classes["form-input"]}
             name="role"
-            value={user.role}
+            defaultValue={user.role}
           >
             <option value="member">Member</option>
             <option value="admin">Admin</option>
@@ -182,7 +212,7 @@ export default function AdminTable({ membersList }: AdminTableProps) {
         </td>
         <td className={classes["table-td"]}>
           <div className={classes["button-wrapper"]}>
-            <Button variant="icon" data-edit-element="1" type="submit">
+            <Button variant="icon" type="submit">
               <Check />
             </Button>
             <Button
@@ -194,16 +224,16 @@ export default function AdminTable({ membersList }: AdminTableProps) {
             </Button>
           </div>
         </td>
-      </tr>
+      </>
     );
   }
 
   return (
     <FormTableWrapper
-      isForm={newMemberDetails ? true : false}
+      isForm={editId ? true : false}
       onSubmit={handleMemberUpdate}
     >
-      <table className={classes["table"]}>
+      <table className={classes["table"]} ref={tableRef} tabIndex={-1}>
         <thead className={classes["table-thead"]}>
           <tr className={classes["table-tr"]}>
             <th className={classNames(classes["table-th"], "text-center")}>
@@ -224,7 +254,11 @@ export default function AdminTable({ membersList }: AdminTableProps) {
           </tr>
         </thead>
         <tbody className={classes["table-tbody"]}>
-          {membersList?.map((user) => renderUserRow(user))}
+          {membersList?.map((user) => (
+            <tr className={classes["table-tr"]} key={user.id}>
+              {renderUserRow(user)}
+            </tr>
+          ))}
         </tbody>
       </table>
 
