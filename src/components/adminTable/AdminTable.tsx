@@ -18,6 +18,7 @@ import Trash from "../../ui/icons/Trash";
 import classes from "./AdminTable.module.css";
 import Check from "../../ui/icons/Check";
 import CloseMark from "../../ui/icons/CloseMark";
+import useAppContext from "../../hooks/context/useAppContext";
 
 type AdminTableProps = {
   membersList: User[] | undefined;
@@ -44,6 +45,7 @@ function FormTableWrapper({
 export default function AdminTable({ membersList }: AdminTableProps) {
   const tableRef = useRef<HTMLTableElement | null>(null);
 
+  const { toastDispatch } = useAppContext();
   const { activePage, removeMembers, updateMember } = useAdminTableContext();
 
   const [selectedMemberIds, setSelectedMemberIds] = useState<Set<string>>(
@@ -60,10 +62,6 @@ export default function AdminTable({ membersList }: AdminTableProps) {
   useEffect(() => {
     tableRef.current?.focus();
   }, [activePage]);
-
-  function handleMemberDelete(memberId: string) {
-    removeMembers([memberId]);
-  }
 
   function handleSelectMember(
     event: ChangeEvent<HTMLInputElement>,
@@ -95,8 +93,28 @@ export default function AdminTable({ membersList }: AdminTableProps) {
     }
   }
 
+  function handleMemberDelete(member: User) {
+    removeMembers([member.id]);
+    toastDispatch({
+      type: "setToastData",
+      payload: {
+        toastTitle: `User '${member.name}' has been deleted `,
+        toastVariant: "primary",
+      },
+    });
+  }
+
   function deleteSelectedMembers() {
+    if (selectedMemberIds.size === 0) return;
+
     removeMembers(Array.from(selectedMemberIds));
+    toastDispatch({
+      type: "setToastData",
+      payload: {
+        toastTitle: `${selectedMemberIds.size} Member(s) deleted`,
+        toastVariant: "primary",
+      },
+    });
   }
 
   function handleEditUser(event: MouseEvent<HTMLButtonElement>, member: User) {
@@ -128,6 +146,13 @@ export default function AdminTable({ membersList }: AdminTableProps) {
 
     updateMember(updatedMember);
     setEditId(null);
+    toastDispatch({
+      type: "setToastData",
+      payload: {
+        toastTitle: `User '${updatedMember.name}' has been updated `,
+        toastVariant: "primary",
+      },
+    });
   }
 
   function handleCloseEdit() {
@@ -168,7 +193,7 @@ export default function AdminTable({ membersList }: AdminTableProps) {
             <Button
               variant="icon"
               className={classes["trash-icon"]}
-              onClick={handleMemberDelete.bind(null, user.id)}
+              onClick={handleMemberDelete.bind(null, user)}
             >
               <Trash />
             </Button>
