@@ -296,10 +296,12 @@ export default function AdminTable({ membersList }: AdminTableProps) {
             onClick={deleteSelectedMembers}
           >
             <span>Delete </span>
-            <span>
-              ({selectedMemberIds.size} member
-              {selectedMemberIds.size > 1 ? "s" : ""})
-            </span>
+            {selectedMemberIds.size > 0 && (
+              <span>
+                ({selectedMemberIds.size} member
+                {selectedMemberIds.size > 1 ? "s" : ""})
+              </span>
+            )}
           </Button>
         </div>
       )}
