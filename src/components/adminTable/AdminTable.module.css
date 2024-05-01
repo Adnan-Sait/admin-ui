@@ -10,6 +10,10 @@
   border-bottom: 3px solid var(--app-table-border-color);
 }
 
+.table:focus-visible {
+  box-shadow: none;
+}
+
 .table-th,
 .table-td {
   padding-inline: 5px;
