@@ -109,7 +109,11 @@ export default function AdminPage() {
 
   return (
     <div>
-      <AdminHeader startItem={startCount ?? 0} endItem={endCount ?? 0} />
+      <AdminHeader
+        startItem={startCount ?? 0}
+        endItem={endCount ?? 0}
+        totalRecords={filteredListLength}
+      />
       <MembersDisplay membersList={paginatedData} />
       <aside className={classes["pagination-container"]}>
         {filteredListLength > 0 && (

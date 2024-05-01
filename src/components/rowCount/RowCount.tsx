@@ -1,18 +1,20 @@
-import useAdminTableContext from "../../hooks/context/useAdminTableContext";
 import classes from "./RowCount.module.css";
 
 type RowCountProps = {
   startCount: number;
   endCount: number;
+  totalRecords: number;
 };
 
-export default function RowCount({ startCount, endCount }: RowCountProps) {
-  const { totalLength } = useAdminTableContext();
-
+export default function RowCount({
+  startCount,
+  endCount,
+  totalRecords,
+}: RowCountProps) {
   return (
     <div className={classes["row-count"]}>
       <span>
-        Showing {startCount} to {endCount} of {totalLength} items
+        Showing {startCount} to {endCount} of {totalRecords} items
       </span>
     </div>
   );
