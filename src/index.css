@@ -59,15 +59,21 @@
   margin: 0;
 }
 
-html,
-input,
-button {
+html {
   font-family: "Inter", sans-serif;
 }
 
 body {
   background-color: var(--app-color-primary-dark);
   color: var(--app-color-text-white);
+}
+
+input,
+select,
+textarea,
+button {
+  font-family: inherit;
+  font-size: inherit;
 }
 
 #root {
