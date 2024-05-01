@@ -1,4 +1,4 @@
-*:focus {
+*:focus:not([tabindex="-1"]) {
   outline: none;
   box-shadow: 0 0 2px 4px var(--app-color-shadow-accent-yellow-200);
 }
