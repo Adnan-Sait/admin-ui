@@ -280,7 +280,12 @@ export default function AdminTable({ membersList }: AdminTableProps) {
         </thead>
         <tbody className={classes["table-tbody"]}>
           {membersList?.map((user) => (
-            <tr className={classes["table-tr"]} key={user.id}>
+            <tr
+              className={classNames(classes["table-tr"], {
+                [classes["selected-row"]]: selectedMemberIds.has(user.id),
+              })}
+              key={user.id}
+            >
               {renderUserRow(user)}
             </tr>
           ))}

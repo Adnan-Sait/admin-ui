@@ -57,6 +57,10 @@
   border-bottom: 2px solid var(--app-table-border-color);
 }
 
+.table .table-tr.selected-row {
+  background-color: var(--app-color-shadow-primary-dark-100);
+}
+
 .td-role {
   text-transform: capitalize;
 }
