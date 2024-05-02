@@ -32,6 +32,8 @@
 
 progress.progress {
   width: 100%;
+  border-top-right-radius: var(--app-border-radius-medium);
+  border-bottom-right-radius: var(--app-border-radius-medium);
 }
 
 progress.progress[value]::-webkit-progress-bar,
@@ -40,8 +42,7 @@ progress.progress[value]::-webkit-progress-value {
   border-bottom-right-radius: var(--app-border-radius-medium);
 }
 
-progress.progress[value]::-moz-progress-bar,
-progress.progress[value]::-moz-progress-value {
+progress.progress[value]::-moz-progress-bar {
   border-top-right-radius: var(--app-border-radius-medium);
   border-bottom-right-radius: var(--app-border-radius-medium);
 }
