@@ -9,6 +9,8 @@ import useQueryParams from "../../hooks/useQueryParams";
 import Pagination from "../../components/pagination/Pagination";
 
 import classes from "./AdminPage.module.css";
+import Button from "../../ui/Button/Button";
+import ArrowPath from "../../ui/icons/ArrowPath";
 
 export type userRole = "member" | "admin";
 
@@ -21,7 +23,12 @@ export type User = {
 
 export default function AdminPage() {
   const itemsPerPage = 10;
-  const { data, error, isLoading } = useQuery<User[] | null>(getMembers);
+  const {
+    data,
+    error,
+    isLoading,
+    refetch: refetchUsers,
+  } = useQuery<User[] | null>(getMembers);
 
   const { members, setMembers, activePage, setActivePage } =
     useAdminTableContext();
@@ -99,12 +106,28 @@ export default function AdminPage() {
     return members.filter((item) => memberIds.includes(item.id));
   }
 
+  function handleUsersRefetch() {
+    refetchUsers();
+  }
+
   if (isLoading) {
     return "loading";
   }
 
   if (error) {
-    return "API error";
+    return (
+      <div className={classes["error-wrapper"]}>
+        <span>Error Fetching Data</span>
+        <Button
+          className={classes["refresh-btn"]}
+          variant="secondary"
+          onClick={handleUsersRefetch}
+        >
+          <span>Try Again</span>
+          <ArrowPath />
+        </Button>
+      </div>
+    );
   }
 
   return (
