@@ -1,4 +1,6 @@
 import { ChangeEvent, FormEvent, useRef } from "react";
+import classNames from "classnames";
+
 import useQueryParams from "../../hooks/useQueryParams";
 import Button from "../../ui/Button/Button";
 import CloseMark from "../../ui/icons/CloseMark";
@@ -70,7 +72,7 @@ export default function AdminSearch() {
         <Button
           variant="icon"
           type="submit"
-          className={classes["search-icon"]}
+          className={classNames("search-icon", classes["search-icon"])}
           aria-label={`Search for ${searchTerm}`}
         >
           <MagnifyingGlass />

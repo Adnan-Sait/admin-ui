@@ -9,16 +9,16 @@ import {
 } from "react";
 import classNames from "classnames";
 
+import useAppContext from "../../hooks/context/useAppContext";
 import useAdminTableContext from "../../hooks/context/useAdminTableContext";
 import { User, userRole } from "../../page/admin/AdminPage";
 import Button from "../../ui/Button/Button";
 import PencilSquare from "../../ui/icons/PencilSquare";
 import Trash from "../../ui/icons/Trash";
-
-import classes from "./AdminTable.module.css";
 import Check from "../../ui/icons/Check";
 import CloseMark from "../../ui/icons/CloseMark";
-import useAppContext from "../../hooks/context/useAppContext";
+
+import classes from "./AdminTable.module.css";
 
 type AdminTableProps = {
   membersList: User[] | undefined;
@@ -186,13 +186,14 @@ export default function AdminTable({ membersList }: AdminTableProps) {
           <div className={classes["button-wrapper"]}>
             <Button
               variant="icon"
+              className="edit"
               onClick={(event) => handleEditUser(event, user)}
             >
               <PencilSquare />
             </Button>
             <Button
               variant="icon"
-              className={classes["trash-icon"]}
+              className={classNames("delete", classes["trash-icon"])}
               onClick={handleMemberDelete.bind(null, user)}
             >
               <Trash />
@@ -205,7 +206,6 @@ export default function AdminTable({ membersList }: AdminTableProps) {
 
   function renderEditRows(user: User) {
     return (
-      // Using a separate key to ensure that the `edit` event does not propogate to the form as submit event.
       <>
         <td className={classNames(classes["table-td"], "text-center")}></td>
         <td className={classes["table-td"]}>
@@ -237,7 +237,7 @@ export default function AdminTable({ membersList }: AdminTableProps) {
         </td>
         <td className={classes["table-td"]}>
           <div className={classes["button-wrapper"]}>
-            <Button variant="icon" type="submit">
+            <Button className="save" variant="icon" type="submit">
               <Check />
             </Button>
             <Button
@@ -296,17 +296,11 @@ export default function AdminTable({ membersList }: AdminTableProps) {
         <div className={classes["delete-btn-wrapper"]}>
           <Button
             variant="danger"
-            className={classes["delete-button"]}
+            className={classNames("delete", classes["delete-button"])}
             disabled={selectedMemberIds.size === 0}
             onClick={deleteSelectedMembers}
           >
-            <span>Delete </span>
-            {selectedMemberIds.size > 0 && (
-              <span>
-                ({selectedMemberIds.size} member
-                {selectedMemberIds.size > 1 ? "s" : ""})
-              </span>
-            )}
+            Delete Selected
           </Button>
         </div>
       )}

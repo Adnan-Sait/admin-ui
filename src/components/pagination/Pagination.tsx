@@ -72,6 +72,7 @@ export default function Pagination({
     <section className={classes.pagination}>
       <Button
         variant="secondary"
+        className="first-page"
         onClick={handleFirstPage}
         disabled={activePage === 1}
       >
@@ -79,6 +80,7 @@ export default function Pagination({
       </Button>
       <Button
         variant="secondary"
+        className="previous-page"
         onClick={handlePreviousPage}
         disabled={activePage === 1}
       >
@@ -86,7 +88,7 @@ export default function Pagination({
       </Button>
       {pages.map((num) => (
         <Button
-          className={classNames({ [classes.active]: activePage === num })}
+          className={classNames(num, { [classes.active]: activePage === num })}
           variant="secondary"
           key={num}
           onClick={handlePageSelection.bind(null, num)}
@@ -96,6 +98,7 @@ export default function Pagination({
       ))}
       <Button
         variant="secondary"
+        className="next-page"
         onClick={handleNextPage}
         disabled={activePage === lastPage}
       >
@@ -103,6 +106,7 @@ export default function Pagination({
       </Button>
       <Button
         variant="secondary"
+        className="last-page"
         onClick={handleLastPage}
         disabled={activePage === lastPage}
       >
