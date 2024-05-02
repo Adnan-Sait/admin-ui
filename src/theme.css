@@ -26,16 +26,30 @@ input[type="checkbox"] {
   align-items: center;
 }
 
-input[type="checkbox"]:checked {
-  background-color: var(--app-color-accent-yellow-200);
-}
-
 input[type="checkbox"]::after {
   content: "\2713";
   visibility: hidden;
 }
 
+input[type="checkbox"]:indeterminate {
+  background-color: var(--app-color-accent-yellow-200);
+}
+
+input[type="checkbox"]:indeterminate::after {
+  content: "\2013";
+  visibility: visible;
+  color: var(--app-color-text-white);
+  font-size: var(--app-sizes-size-16);
+  line-height: var(--app-sizes-size-16);
+  font-weight: var(--app-font-weight-700);
+}
+
+input[type="checkbox"]:checked {
+  background-color: var(--app-color-accent-yellow-200);
+}
+
 input[type="checkbox"]:checked::after {
+  content: "\2713";
   visibility: visible;
   color: var(--app-color-text-white);
   font-size: var(--app-sizes-size-14);

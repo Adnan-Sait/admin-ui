@@ -44,6 +44,7 @@ function FormTableWrapper({
 
 export default function AdminTable({ membersList }: AdminTableProps) {
   const tableRef = useRef<HTMLTableElement | null>(null);
+  const selectAllCheckboxRef = useRef<HTMLInputElement | null>(null);
 
   const { toastDispatch } = useAppContext();
   const { activePage, removeMembers, updateMember } = useAdminTableContext();
@@ -62,6 +63,14 @@ export default function AdminTable({ membersList }: AdminTableProps) {
   useEffect(() => {
     tableRef.current?.focus();
   }, [activePage]);
+
+  useEffect(() => {
+    if (!selectAllCheckboxRef.current) return;
+
+    const isIndeterminate =
+      selectedMemberIds.size > 0 && selectedMemberIds.size < membersListLength;
+    selectAllCheckboxRef.current.indeterminate = isIndeterminate;
+  }, [selectedMemberIds, membersListLength]);
 
   function handleSelectMember(
     event: ChangeEvent<HTMLInputElement>,
@@ -264,6 +273,7 @@ export default function AdminTable({ membersList }: AdminTableProps) {
             <th className={classNames(classes["table-th"], "text-center")}>
               {membersListLength > 0 && (
                 <input
+                  ref={selectAllCheckboxRef}
                   type="checkbox"
                   onChange={handleSelectAllMembers}
                   checked={selectedMemberIds.size === membersList?.length}
