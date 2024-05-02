@@ -19,6 +19,7 @@
 }
 
 .variant--secondary {
+  color: var(--app-color-text-white);
   background-color: transparent;
   border: 2px solid var(--app-color-accent-yellow);
 }
@@ -41,6 +42,7 @@
   background-color: transparent;
   border: none;
   padding: 5px;
+  color: var(--app-color-text-white);
 }
 
 .button:disabled {
