@@ -19,6 +19,12 @@ export default function useQuery<T>(apiCall: () => Promise<ApiResponse<T>>) {
       setError(apiResponse.error);
       setIsLoading(false);
     })();
+
+    return () => {
+      setData(null);
+      setError(false);
+      setIsLoading(true);
+    };
   }, [apiCall, refetchCount]);
 
   /**
