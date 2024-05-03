@@ -1,5 +1,6 @@
 import AdminSearch from "../adminSearch/AdminSearch";
 import RowCount from "../rowCount/RowCount";
+
 import classes from "./AdminHeader.module.css";
 
 type AdminHeaderProps = {
@@ -18,6 +19,7 @@ export default function AdminHeader({
       <AdminSearch />
       {startItem > 0 && endItem > 0 && (
         <RowCount
+          className={classes["row-count"]}
           startCount={startItem}
           endCount={endItem}
           totalRecords={totalRecords}
