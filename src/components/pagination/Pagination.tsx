@@ -1,4 +1,6 @@
+import { MouseEvent, useEffect } from "react";
 import classNames from "classnames";
+
 import Button from "../../ui/Button/Button";
 import ChevronLeft from "../../ui/icons/ChevronLeft";
 import ChevronRight from "../../ui/icons/ChevronRight";
@@ -6,7 +8,6 @@ import DoubleChevronLeft from "../../ui/icons/DoubleChevronLeft";
 import DoubleChevronRight from "../../ui/icons/DoubleChevronRight";
 
 import classes from "./Pagination.module.css";
-import { useEffect } from "react";
 
 type PaginationProps = {
   activePage: number;
@@ -40,15 +41,18 @@ export default function Pagination({
     return tempPages;
   }
 
-  function handleFirstPage() {
+  function handleFirstPage(event: MouseEvent<HTMLButtonElement>) {
+    event.currentTarget.blur();
     setActivePage(1);
   }
 
-  function handleLastPage() {
+  function handleLastPage(event: MouseEvent<HTMLButtonElement>) {
+    event.currentTarget.blur();
     setActivePage(lastPage);
   }
 
-  function handlePreviousPage() {
+  function handlePreviousPage(event: MouseEvent<HTMLButtonElement>) {
+    event.currentTarget.blur();
     setActivePage((state) => {
       const prevPage = state > 0 ? state - 1 : 1;
 
@@ -56,7 +60,8 @@ export default function Pagination({
     });
   }
 
-  function handleNextPage() {
+  function handleNextPage(event: MouseEvent<HTMLButtonElement>) {
+    event.currentTarget.blur();
     setActivePage((state) => {
       const nextPage = state < lastPage ? state + 1 : lastPage;
 
@@ -64,7 +69,11 @@ export default function Pagination({
     });
   }
 
-  function handlePageSelection(selectedPage: number) {
+  function handlePageSelection(
+    event: MouseEvent<HTMLButtonElement>,
+    selectedPage: number
+  ) {
+    event.currentTarget.blur();
     setActivePage(selectedPage);
   }
 
@@ -91,7 +100,7 @@ export default function Pagination({
           className={classNames(num, { [classes.active]: activePage === num })}
           variant="secondary"
           key={num}
-          onClick={handlePageSelection.bind(null, num)}
+          onClick={(event) => handlePageSelection(event, num)}
         >
           {num}
         </Button>

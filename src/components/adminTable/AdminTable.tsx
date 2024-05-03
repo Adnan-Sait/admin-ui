@@ -47,7 +47,7 @@ export default function AdminTable({ membersList }: AdminTableProps) {
   const selectAllCheckboxRef = useRef<HTMLInputElement | null>(null);
 
   const { toastDispatch } = useAppContext();
-  const { activePage, removeMembers, updateMember } = useAdminTableContext();
+  const { removeMembers, updateMember } = useAdminTableContext();
 
   const [selectedMemberIds, setSelectedMemberIds] = useState<Set<string>>(
     new Set()
@@ -59,10 +59,6 @@ export default function AdminTable({ membersList }: AdminTableProps) {
   useEffect(() => {
     setSelectedMemberIds(new Set());
   }, [membersList]);
-
-  useEffect(() => {
-    tableRef.current?.focus();
-  }, [activePage]);
 
   useEffect(() => {
     if (!selectAllCheckboxRef.current) return;
