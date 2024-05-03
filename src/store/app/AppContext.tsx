@@ -24,6 +24,9 @@ const toastInitialState: ToastData = {
   showToast: false,
 };
 
+/**
+ * Reducer for the toast state.
+ */
 function toastReducer(state: ToastData, action: ToastAction) {
   const { type, payload } = action;
 

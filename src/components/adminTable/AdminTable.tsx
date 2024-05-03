@@ -43,7 +43,6 @@ function FormTableWrapper({
 }
 
 export default function AdminTable({ membersList }: AdminTableProps) {
-  const tableRef = useRef<HTMLTableElement | null>(null);
   const selectAllCheckboxRef = useRef<HTMLInputElement | null>(null);
 
   const { toastDispatch } = useAppContext();
@@ -56,10 +55,12 @@ export default function AdminTable({ membersList }: AdminTableProps) {
 
   const membersListLength = membersList?.length ?? 0;
 
+  // When members list changes, clear the selection.
   useEffect(() => {
     setSelectedMemberIds(new Set());
   }, [membersList]);
 
+  // Sets the 'indeterminate' state on the checkbox.
   useEffect(() => {
     if (!selectAllCheckboxRef.current) return;
 
@@ -116,13 +117,14 @@ export default function AdminTable({ membersList }: AdminTableProps) {
     toastDispatch({
       type: "setToastData",
       payload: {
-        toastTitle: `${selectedMemberIds.size} Member(s) deleted`,
+        toastTitle: `${selectedMemberIds.size} user(s) deleted`,
         toastVariant: "primary",
       },
     });
   }
 
   function handleEditUser(event: MouseEvent<HTMLButtonElement>, member: User) {
+    // To prevent the event from triggering form submit.
     event.preventDefault();
 
     setEditId(member.id);
@@ -263,7 +265,7 @@ export default function AdminTable({ membersList }: AdminTableProps) {
       isForm={editId ? true : false}
       onSubmit={handleMemberUpdate}
     >
-      <table className={classes["table"]} ref={tableRef} tabIndex={-1}>
+      <table className={classes["table"]}>
         <thead className={classes["table-thead"]}>
           <tr className={classes["table-tr"]}>
             <th className={classNames(classes["table-th"], "text-center")}>

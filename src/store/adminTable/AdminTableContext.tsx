@@ -20,6 +20,7 @@ export default function AdminTableContextProvider({
 }: PropsWithChildren) {
   const [members, setMembers] = useState<User[] | null>(null);
   const [activePage, setActivePage] = useState(1);
+
   const totalLength = members?.length ?? 0;
 
   function removeMembers(memberIds: string[]) {

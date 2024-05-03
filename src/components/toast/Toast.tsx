@@ -1,9 +1,10 @@
 import classNames from "classnames";
 import Button from "../../ui/Button/Button";
 
-import classes from "./Toast.module.css";
 import useAppContext from "../../hooks/context/useAppContext";
 import Progress from "../../ui/Progress/Progress";
+
+import classes from "./Toast.module.css";
 
 export default function Toast() {
   const {

@@ -32,6 +32,9 @@ export default function Pagination({
     }
   }, [activePage, lastPage, setActivePage]);
 
+  /**
+   * Generates page numbers array.
+   */
   function generatePageNumbers() {
     const tempPages: number[] = [];
     for (let page = startPage; page <= lastPage; page++) {

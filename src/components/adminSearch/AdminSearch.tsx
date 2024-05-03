@@ -10,7 +10,7 @@ import classes from "./AdminSearch.module.css";
 
 export default function AdminSearch() {
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const [params, setParams] = useQueryParams();
+  const [params, updateParams] = useQueryParams();
   const searchTerm = params.get("search") ?? "";
 
   function handleFormSubmit(event: FormEvent<HTMLFormElement>) {
@@ -26,22 +26,30 @@ export default function AdminSearch() {
     updateSearchParam(val);
   }
 
+  /**
+   * Updates the search parameter.
+   */
   function updateSearchParam(searchText: string) {
-    setParams((state) => {
+    updateParams((state) => {
+      const updatedState = new Map(state);
       if (searchText && searchText.trim().length > 0) {
-        state.set("search", searchText);
+        updatedState.set("search", searchText);
       } else {
-        state.delete("search");
+        updatedState.delete("search");
       }
-      return state;
+      return updatedState;
     });
   }
 
+  /**
+   * Clears the search parameter.
+   */
   function handleSearchClear() {
     inputRef.current?.focus();
-    setParams((state) => {
-      state.delete("search");
-      return state;
+    updateParams((state) => {
+      const updatedState = new Map(state);
+      updatedState.delete("search");
+      return updatedState;
     });
   }
 

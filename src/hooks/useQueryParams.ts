@@ -7,6 +7,9 @@ export default function useQueryParams(): [
   const [params, setParams] = useState<Map<string, string>>(new Map());
 
   useEffect(() => {
+    /**
+     * Saves the query parameters into the state map.
+     */
     function handleUrlHashChange() {
       const hashPath = window.location.hash;
       const paramsMap = new Map<string, string>();
@@ -48,24 +51,23 @@ export default function useQueryParams(): [
   function updateParams(
     callback: (state: Map<string, string>) => Map<string, string>
   ) {
-    // TODO: Add polyfill for structured clone.
-    const updatedParams = callback(structuredClone(params));
+    const updatedParamsMap = callback(params);
     const paramList: string[] = [];
-    updatedParams.forEach((value, key) => {
+    updatedParamsMap.forEach((value, key) => {
       if (key) {
         paramList.push(`${key}=${encodeURIComponent(value)}`);
       }
     });
 
-    const queryParamIndex = window.location.hash.indexOf("?");
     const queryParams = paramList.join("&");
+    const queryParamSymbolIndex = window.location.hash.indexOf("?");
 
     if (!queryParams) {
       window.location.hash = "";
-    } else if (queryParamIndex > -1) {
+    } else if (queryParamSymbolIndex > -1) {
       window.location.hash = `${window.location.hash.substring(
         0,
-        queryParamIndex + 1
+        queryParamSymbolIndex + 1
       )}${queryParams}`;
     } else {
       window.location.hash = `${window.location.hash}?${queryParams}`;
