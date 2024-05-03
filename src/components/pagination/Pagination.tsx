@@ -54,7 +54,7 @@ export default function Pagination({
   function handlePreviousPage(event: MouseEvent<HTMLButtonElement>) {
     event.currentTarget.blur();
     setActivePage((state) => {
-      const prevPage = state > 0 ? state - 1 : 1;
+      const prevPage = Math.max(state - 1, 1);
 
       return prevPage;
     });
@@ -63,7 +63,7 @@ export default function Pagination({
   function handleNextPage(event: MouseEvent<HTMLButtonElement>) {
     event.currentTarget.blur();
     setActivePage((state) => {
-      const nextPage = state < lastPage ? state + 1 : lastPage;
+      const nextPage = Math.min(state + 1, lastPage);
 
       return nextPage;
     });
