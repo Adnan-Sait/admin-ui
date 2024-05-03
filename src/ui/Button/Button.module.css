@@ -1,10 +1,54 @@
 .button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: var(--app-font-weight-600);
   cursor: pointer;
   border-radius: var(--app-border-radius-medium);
+  padding: 5px 10px;
+  transition: all 0.3s ease-in, border 0s, outline 0s;
+}
+
+.variant--primary {
+  background-color: var(--app-color-accent-yellow-200);
+  border: 2px solid var(--app-color-accent-yellow);
+}
+
+.variant--primary:hover {
+  background-color: var(--app-color-accent-yellow);
+}
+
+.variant--secondary {
+  color: var(--app-color-text-white);
+  background-color: transparent;
+  border: 2px solid var(--app-color-accent-yellow);
+}
+
+.variant--secondary:hover {
+  background-color: var(--app-color-shadow-accent-yellow-100);
+}
+
+.variant--danger {
+  background-color: var(--app-color-danger-red);
+  border: 2px solid var(--app-color-danger-red-600);
+  color: var(--app-color-text-white);
+}
+
+.variant--danger:hover {
+  background-color: var(--app-color-danger-red-500);
 }
 
 .variant--icon {
-  padding: 5px;
   background-color: transparent;
   border: none;
+  padding: 5px;
+  color: var(--app-color-text-white);
+}
+
+.button:disabled {
+  border-color: var(--app-color-gray-400);
+  background-color: var(--app-color-gray-400);
+  opacity: 0.5;
+  pointer-events: none;
+  transition: none;
 }

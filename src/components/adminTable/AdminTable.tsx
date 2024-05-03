@@ -1,84 +1,317 @@
-import useWindowSize from "../../hooks/useWindowSize";
+import {
+  ChangeEvent,
+  MouseEvent,
+  PropsWithChildren,
+  SyntheticEvent,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import classNames from "classnames";
+
+import useAppContext from "../../hooks/context/useAppContext";
+import useAdminTableContext from "../../hooks/context/useAdminTableContext";
+import { User, userRole } from "../../page/admin/AdminPage";
+import Button from "../../ui/Button/Button";
+import PencilSquare from "../../ui/icons/PencilSquare";
+import Trash from "../../ui/icons/Trash";
+import Check from "../../ui/icons/Check";
+import CloseMark from "../../ui/icons/CloseMark";
+
 import classes from "./AdminTable.module.css";
 
-export default function AdminTable() {
-  const { width } = useWindowSize();
+type AdminTableProps = {
+  membersList: User[] | undefined;
+};
 
-  if (width <= 767) {
+/**
+ * Conditionally adds a form element to wrap the children.
+ */
+function FormTableWrapper({
+  children,
+  isForm,
+  onSubmit,
+}: PropsWithChildren<{
+  isForm: boolean;
+  onSubmit: (event: SyntheticEvent<HTMLFormElement, SubmitEvent>) => void;
+}>) {
+  if (isForm) {
+    return <form onSubmit={onSubmit}>{children}</form>;
+  }
+
+  return <>{children}</>;
+}
+
+export default function AdminTable({ membersList }: AdminTableProps) {
+  const selectAllCheckboxRef = useRef<HTMLInputElement | null>(null);
+
+  const { toastDispatch } = useAppContext();
+  const { removeMembers, updateMember } = useAdminTableContext();
+
+  const [selectedMemberIds, setSelectedMemberIds] = useState<Set<string>>(
+    new Set()
+  );
+  const [editId, setEditId] = useState<string | null>(null);
+
+  const membersListLength = membersList?.length ?? 0;
+
+  // When members list changes, clear the selection.
+  useEffect(() => {
+    setSelectedMemberIds(new Set());
+  }, [membersList]);
+
+  // Sets the 'indeterminate' state on the checkbox.
+  useEffect(() => {
+    if (!selectAllCheckboxRef.current) return;
+
+    const isIndeterminate =
+      selectedMemberIds.size > 0 && selectedMemberIds.size < membersListLength;
+    selectAllCheckboxRef.current.indeterminate = isIndeterminate;
+  }, [selectedMemberIds, membersListLength]);
+
+  function handleSelectMember(
+    event: ChangeEvent<HTMLInputElement>,
+    memberId: string
+  ) {
+    if (event.target.checked) {
+      setSelectedMemberIds((state) => {
+        const newSet = new Set(state);
+        newSet.add(memberId);
+
+        return newSet;
+      });
+    } else {
+      setSelectedMemberIds((state) => {
+        const newSet = new Set(state);
+        newSet.delete(memberId);
+
+        return newSet;
+      });
+    }
+  }
+
+  function handleSelectAllMembers(event: ChangeEvent<HTMLInputElement>) {
+    if (event.target.checked) {
+      const memberIds = membersList?.map((item) => item.id) || [];
+      setSelectedMemberIds(new Set(memberIds));
+    } else {
+      setSelectedMemberIds(new Set());
+    }
+  }
+
+  function handleMemberDelete(member: User) {
+    removeMembers([member.id]);
+    toastDispatch({
+      type: "setToastData",
+      payload: {
+        toastTitle: `User '${member.name}' has been deleted `,
+        toastVariant: "primary",
+      },
+    });
+  }
+
+  function deleteSelectedMembers() {
+    if (selectedMemberIds.size === 0) return;
+
+    removeMembers(Array.from(selectedMemberIds));
+    toastDispatch({
+      type: "setToastData",
+      payload: {
+        toastTitle: `${selectedMemberIds.size} user(s) deleted`,
+        toastVariant: "primary",
+      },
+    });
+  }
+
+  function handleEditUser(event: MouseEvent<HTMLButtonElement>, member: User) {
+    // To prevent the event from triggering form submit.
+    event.preventDefault();
+
+    setEditId(member.id);
+  }
+
+  function handleMemberUpdate(
+    event: SyntheticEvent<HTMLFormElement, SubmitEvent>
+  ) {
+    event.preventDefault();
+
+    const formEl = event.currentTarget;
+    const name = (formEl.elements.namedItem("name") as HTMLInputElement).value;
+    const email = (formEl.elements.namedItem("email") as HTMLInputElement)
+      .value;
+    const role = (formEl.elements.namedItem("role") as HTMLSelectElement)
+      .value as userRole;
+
+    if (!editId) return;
+
+    const updatedMember: User = {
+      id: editId,
+      name,
+      email,
+      role,
+    };
+
+    updateMember(updatedMember);
+    setEditId(null);
+    toastDispatch({
+      type: "setToastData",
+      payload: {
+        toastTitle: `User '${updatedMember.name}' has been updated `,
+        toastVariant: "primary",
+      },
+    });
+  }
+
+  function handleCloseEdit() {
+    setEditId(null);
+  }
+
+  function renderUserRow(user: User) {
+    if (editId === user.id) {
+      return renderEditRows(user);
+    }
+
+    return renderDetailsRow(user);
+  }
+
+  function renderDetailsRow(user: User) {
     return (
-      <div>
-        <div>
-          <div>
-            <input type="checkbox" />
+      <>
+        <td className={classNames(classes["table-td"], "text-center")}>
+          <input
+            type="checkbox"
+            checked={selectedMemberIds.has(user.id)}
+            onChange={(event) => handleSelectMember(event, user.id)}
+          />
+        </td>
+        <td className={classes["table-td"]}>{user.name}</td>
+        <td className={classes["table-td"]}>{user.email}</td>
+        <td className={classNames(classes["table-td"], classes["td-role"])}>
+          {user.role}
+        </td>
+        <td className={classes["table-td"]}>
+          <div className={classes["button-wrapper"]}>
+            <Button
+              variant="icon"
+              className="edit"
+              onClick={(event) => handleEditUser(event, user)}
+            >
+              <PencilSquare />
+            </Button>
+            <Button
+              variant="icon"
+              className={classNames("delete", classes["trash-icon"])}
+              onClick={handleMemberDelete.bind(null, user)}
+            >
+              <Trash />
+            </Button>
           </div>
+        </td>
+      </>
+    );
+  }
 
-          <div>
-            <div>Aaron Miles</div>
-            <div>aaron@greektrust.com</div>
+  function renderEditRows(user: User) {
+    return (
+      <>
+        <td className={classNames(classes["table-td"], "text-center")}></td>
+        <td className={classes["table-td"]}>
+          <input
+            className={classes["form-input"]}
+            autoFocus
+            type="text"
+            name="name"
+            defaultValue={user.name}
+          />
+        </td>
+        <td className={classes["table-td"]}>
+          <input
+            className={classes["form-input"]}
+            type="text"
+            name="email"
+            defaultValue={user.email}
+          />
+        </td>
+        <td className={classNames(classes["table-td"], classes["td-role"])}>
+          <select
+            className={classes["form-input"]}
+            name="role"
+            defaultValue={user.role}
+          >
+            <option value="member">Member</option>
+            <option value="admin">Admin</option>
+          </select>
+        </td>
+        <td className={classes["table-td"]}>
+          <div className={classes["button-wrapper"]}>
+            <Button className="save" variant="icon" type="submit">
+              <Check />
+            </Button>
+            <Button
+              variant="icon"
+              className={classes["trash-icon"]}
+              onClick={handleCloseEdit}
+            >
+              <CloseMark />
+            </Button>
           </div>
-
-          <div>Member</div>
-
-          <div>
-            <button>Edit</button>
-            <button>Delete</button>
-          </div>
-        </div>
-      </div>
+        </td>
+      </>
     );
   }
 
   return (
-    <table className={classes["table"]}>
-      <thead className={classes["table-thead"]}>
-        <tr className={classes["table-tr"]}>
-          <th className={classes["table-th"]}>
-            <input type="checkbox" />
-          </th>
-          <th className={classes["table-th"]}>Name</th>
-          <th className={classes["table-th"]}>Email</th>
-          <th className={classes["table-th"]}>Role</th>
-          <th className={classes["table-th"]}>Actions</th>
-        </tr>
-      </thead>
-      <tbody className={classes["table-tbody"]}>
-        <tr className={classes["table-tr"]}>
-          <td className={classes["table-td"]}>
-            <input type="checkbox" />
-          </td>
-          <td className={classes["table-td"]}>Aaron Miles</td>
-          <td className={classes["table-td"]}>aaron@greektrust.com</td>
-          <td className={classes["table-td"]}>Member</td>
-          <td className={classes["table-td"]}>
-            <button>Edit</button>
-            <button>Delete</button>
-          </td>
-        </tr>
-        <tr className={classes["table-tr"]}>
-          <td className={classes["table-td"]}>
-            <input type="checkbox" />
-          </td>
-          <td className={classes["table-td"]}>Aaron Miles</td>
-          <td className={classes["table-td"]}>aaron@greektrust.com</td>
-          <td className={classes["table-td"]}>Member</td>
-          <td className={classes["table-td"]}>
-            <button>Edit</button>
-            <button>Delete</button>
-          </td>
-        </tr>
-        <tr className={classes["table-tr"]}>
-          <td className={classes["table-td"]}>
-            <input type="checkbox" />
-          </td>
-          <td className={classes["table-td"]}>Aaron Miles</td>
-          <td className={classes["table-td"]}>aaron@greektrust.com</td>
-          <td className={classes["table-td"]}>Member</td>
-          <td className={classes["table-td"]}>
-            <button>Edit</button>
-            <button>Delete</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <FormTableWrapper
+      isForm={editId ? true : false}
+      onSubmit={handleMemberUpdate}
+    >
+      <table className={classes["table"]}>
+        <thead className={classes["table-thead"]}>
+          <tr className={classes["table-tr"]}>
+            <th className={classNames(classes["table-th"], "text-center")}>
+              {membersListLength > 0 && (
+                <input
+                  ref={selectAllCheckboxRef}
+                  type="checkbox"
+                  onChange={handleSelectAllMembers}
+                  checked={selectedMemberIds.size === membersList?.length}
+                />
+              )}
+            </th>
+            <th className={classes["table-th"]}>Name</th>
+            <th className={classes["table-th"]}>Email</th>
+            <th className={classes["table-th"]}>Role</th>
+            <th className={classNames(classes["table-th"], "text-center")}>
+              Actions
+            </th>
+          </tr>
+        </thead>
+        <tbody className={classes["table-tbody"]}>
+          {membersList?.map((user) => (
+            <tr
+              className={classNames(classes["table-tr"], {
+                [classes["selected-row"]]: selectedMemberIds.has(user.id),
+              })}
+              key={user.id}
+            >
+              {renderUserRow(user)}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      {membersListLength > 0 && (
+        <div className={classes["delete-btn-wrapper"]}>
+          <Button
+            variant="danger"
+            className={classNames("delete", classes["delete-button"])}
+            disabled={selectedMemberIds.size === 0}
+            onClick={deleteSelectedMembers}
+          >
+            Delete Selected
+          </Button>
+        </div>
+      )}
+    </FormTableWrapper>
   );
 }

@@ -4,7 +4,7 @@ import classNames from "classnames";
 import classes from "./Button.module.css";
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: "primary" | "icon";
+  variant?: "primary" | "secondary" | "danger" | "icon";
   className?: string;
 };
 
@@ -12,6 +12,8 @@ export default function Button({
   children,
   className,
   variant = "primary",
+  disabled,
+  type = "button",
   ...attrs
 }: PropsWithChildren<ButtonProps>) {
   return (
@@ -19,9 +21,12 @@ export default function Button({
       className={classNames(
         className,
         classes.button,
-        classes[`variant--${variant}`]
+        classes[`variant--${variant}`],
+        { "no-transition": disabled }
       )}
       tabIndex={0}
+      type={type}
+      disabled={disabled}
       {...attrs}
     >
       {children}

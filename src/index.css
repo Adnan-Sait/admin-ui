@@ -4,9 +4,23 @@
   --app-color-primary-light: #edecdd;
   --app-color-accent-yellow: #e6920c;
   --app-color-text-white: #faf9f6;
-  --app-color-primary-dark-300: #515152;
+  --app-color-primary-dark-200: #515152;
+  --app-color-primary-dark-300: #3b3b3d;
   --app-color-primary-dark-500: #1e1e1f;
   --app-color-primary-dark-600: #161617;
+  --app-color-accent-yellow-600: #a16608;
+  --app-color-accent-yellow-300: #eba83d;
+  --app-color-accent-yellow-200: #eeb355;
+  --app-color-accent-yellow-100: #f3c986;
+  --app-color-danger-red: #b91c1c;
+  --app-color-danger-red-500: #991b1b;
+  --app-color-danger-red-600: #7f1d1d;
+  --app-color-red: #f11111;
+  --app-color-gray-400: #9ca3af;
+
+  --app-color-shadow-accent-yellow-100: rgb(243 201 134 / 40%);
+  --app-color-shadow-accent-yellow-200: rgb(230 146 12 / 40%);
+  --app-color-shadow-primary-dark-100: rgb(156 163 175 / 30%);
 
   /* Sizes */
   --app-sizes-size-10: 0.625rem;
@@ -32,7 +46,9 @@
   --app-font-weight-700: 700;
 
   /* Border */
+  --app-border-radius-small: 2px;
   --app-border-radius-medium: 5px;
+  --app-border-radius-rounded: 50%;
 }
 
 *,
@@ -45,11 +61,20 @@
 
 html {
   font-family: "Inter", sans-serif;
+  scroll-behavior: smooth;
 }
 
 body {
   background-color: var(--app-color-primary-dark);
   color: var(--app-color-text-white);
+}
+
+input,
+select,
+textarea,
+button {
+  font-family: inherit;
+  font-size: inherit;
 }
 
 #root {
@@ -61,4 +86,12 @@ body {
 
 .container {
   margin-inline: 28px;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.no-transition {
+  transition: none !important;
 }

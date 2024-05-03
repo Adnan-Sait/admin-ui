@@ -1,0 +1,5 @@
+.no-content-msg {
+  font-size: var(--app-sizes-size-14);
+  text-align: center;
+  margin: 25px 30px;
+}

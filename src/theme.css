@@ -1,0 +1,68 @@
+*:focus-visible {
+  outline: none;
+  box-shadow: 0 0 2px 4px var(--app-color-shadow-accent-yellow-200);
+}
+
+input[type="text"],
+select {
+  color: var(--app-color-text-white);
+  background-color: var(--app-color-primary-dark-300);
+  border: none;
+  border-bottom: 2px solid var(--app-color-accent-yellow);
+  border-radius: var(--app-border-radius-small);
+  padding: 5px;
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  height: 22px;
+  width: 22px;
+  border: 2px solid var(--app-color-accent-yellow);
+  border-radius: var(--app-border-radius-rounded);
+  cursor: pointer;
+
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Added to prevent layout shift which happens when the psuedo element is rendered */
+input[type="checkbox"]::after {
+  content: "\2713";
+  visibility: hidden;
+}
+
+input[type="checkbox"]:indeterminate {
+  background-color: var(--app-color-accent-yellow-200);
+}
+
+input[type="checkbox"]:indeterminate::after {
+  content: "\2013";
+  visibility: visible;
+  color: var(--app-color-text-white);
+  font-size: var(--app-sizes-size-16);
+  line-height: var(--app-sizes-size-16);
+  font-weight: var(--app-font-weight-700);
+}
+
+input[type="checkbox"]:checked {
+  background-color: var(--app-color-accent-yellow-200);
+}
+
+input[type="checkbox"]:checked::after {
+  content: "\2713";
+  visibility: visible;
+  color: var(--app-color-text-white);
+  font-size: var(--app-sizes-size-14);
+  font-weight: var(--app-font-weight-700);
+}
+
+@keyframes rotate {
+  0% {
+    rotate: 0deg;
+  }
+
+  100% {
+    rotate: 90deg;
+  }
+}

@@ -1,0 +1,21 @@
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-block: 14px;
+}
+
+.error-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.refresh-btn {
+  display: flex;
+  gap: 10px;
+}
+
+.refresh-btn:hover :global(svg) :global {
+  animation: rotate 0.5s linear forwards;
+}
