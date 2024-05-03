@@ -8,6 +8,7 @@ type ProgressProps = Omit<
     /** The duration of the progress bar in milliseconds. */
     max: number;
     type?: "increment" | "decrement";
+    /** The progress is reset if the reference changes */
     onComplete?: (value?: number) => void;
   },
   "value"
@@ -45,6 +46,10 @@ export default function Progress({
       onComplete(value);
     }
   }, [value, isComplete, onComplete]);
+
+  useEffect(() => {
+    setValue(initialValue);
+  }, [onComplete, initialValue]);
 
   return (
     <progress

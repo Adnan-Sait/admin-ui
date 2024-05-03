@@ -5,6 +5,7 @@ import useAppContext from "../../hooks/context/useAppContext";
 import Progress from "../../ui/Progress/Progress";
 
 import classes from "./Toast.module.css";
+import { useCallback } from "react";
 
 export default function Toast() {
   const {
@@ -12,9 +13,9 @@ export default function Toast() {
     toastDispatch,
   } = useAppContext();
 
-  function handleLoadingComplete() {
+  const handleLoadingComplete = useCallback(() => {
     toastDispatch({ type: "hideToast" });
-  }
+  }, [toastDispatch, toastTitle]);
 
   function handleToastClose() {
     toastDispatch({ type: "hideToast" });
