@@ -1,3 +1,5 @@
+import { useCallback } from "react";
+
 import classNames from "classnames";
 import Button from "../../ui/Button/Button";
 
@@ -5,7 +7,6 @@ import useAppContext from "../../hooks/context/useAppContext";
 import Progress from "../../ui/Progress/Progress";
 
 import classes from "./Toast.module.css";
-import { useCallback } from "react";
 
 export default function Toast() {
   const {
