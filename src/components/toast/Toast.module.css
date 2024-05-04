@@ -52,3 +52,13 @@ progress.progress[value]::-moz-progress-bar {
   justify-content: space-between;
   gap: 24px;
 }
+
+.toast-body button {
+  color: var(--app-color-primary-dark);
+}
+
+@media (max-width: 768px) {
+  .toast-body {
+    gap: 5px;
+  }
+}
