@@ -11,15 +11,18 @@ import classNames from "classnames";
 
 import useAppContext from "../../hooks/context/useAppContext";
 import useAdminTableContext from "../../hooks/context/useAdminTableContext";
+import useWindowSize from "../../hooks/useWindowSize";
 import { User, userRole } from "../../page/admin/AdminPage";
+import AdminTableCell from "./AdminTableCell/AdminTableCell";
 import Button from "../../ui/Button/Button";
 import PencilSquare from "../../ui/icons/PencilSquare";
 import Trash from "../../ui/icons/Trash";
 import Check from "../../ui/icons/Check";
 import CloseMark from "../../ui/icons/CloseMark";
+import UserGear from "../../ui/icons/UserGear";
+import UserIcon from "../../ui/icons/User";
 
 import classes from "./AdminTable.module.css";
-import useWindowSize from "../../hooks/useWindowSize";
 
 type AdminTableProps = {
   membersList: User[] | undefined;
@@ -56,7 +59,7 @@ export default function AdminTable({ membersList }: AdminTableProps) {
 
   const { width: windowWidth } = useWindowSize();
 
-  const isMobile = windowWidth && windowWidth <= 768;
+  const isMobile = windowWidth !== null && windowWidth <= 768;
   const membersListLength = membersList?.length ?? 0;
 
   // When members list changes, clear the selection.
@@ -181,19 +184,25 @@ export default function AdminTable({ membersList }: AdminTableProps) {
   function renderDetailsRow(user: User) {
     return (
       <>
-        <td className={classNames(classes["table-td"], "text-center")}>
+        <AdminTableCell
+          className={classNames(
+            classes["table-td"],
+            "text-center",
+            classes["td-select"]
+          )}
+        >
           <input
             type="checkbox"
             checked={selectedMemberIds.has(user.id)}
             onChange={(event) => handleSelectMember(event, user.id)}
           />
-        </td>
-        <td className={classes["table-td"]}>{user.name}</td>
-        <td className={classes["table-td"]}>{user.email}</td>
-        <td className={classNames(classes["table-td"], classes["td-role"])}>
-          {user.role}
-        </td>
-        <td className={classes["table-td"]}>
+        </AdminTableCell>
+        {!isMobile
+          ? renderDesktopDetailsRow(user)
+          : renderMobileDetailsRow(user)}
+        <AdminTableCell
+          className={classNames(classes["table-td"], classes["td-actions"])}
+        >
           <div className={classes["button-wrapper"]}>
             <Button
               variant="icon"
@@ -210,7 +219,7 @@ export default function AdminTable({ membersList }: AdminTableProps) {
               <Trash />
             </Button>
           </div>
-        </td>
+        </AdminTableCell>
       </>
     );
   }
@@ -218,8 +227,10 @@ export default function AdminTable({ membersList }: AdminTableProps) {
   function renderEditRows(user: User) {
     return (
       <>
-        <td className={classNames(classes["table-td"], "text-center")}></td>
-        <td className={classes["table-td"]}>
+        <AdminTableCell
+          className={classNames(classes["table-td"], "text-center")}
+        ></AdminTableCell>
+        <AdminTableCell className={classes["table-td"]}>
           <input
             className={classes["form-input"]}
             autoFocus
@@ -227,16 +238,18 @@ export default function AdminTable({ membersList }: AdminTableProps) {
             name="name"
             defaultValue={user.name}
           />
-        </td>
-        <td className={classes["table-td"]}>
+        </AdminTableCell>
+        <AdminTableCell className={classes["table-td"]}>
           <input
             className={classes["form-input"]}
             type="text"
             name="email"
             defaultValue={user.email}
           />
-        </td>
-        <td className={classNames(classes["table-td"], classes["td-role"])}>
+        </AdminTableCell>
+        <AdminTableCell
+          className={classNames(classes["table-td"], classes["td-role"])}
+        >
           <select
             className={classes["form-input"]}
             name="role"
@@ -245,8 +258,8 @@ export default function AdminTable({ membersList }: AdminTableProps) {
             <option value="member">Member</option>
             <option value="admin">Admin</option>
           </select>
-        </td>
-        <td className={classes["table-td"]}>
+        </AdminTableCell>
+        <AdminTableCell className={classes["table-td"]}>
           <div className={classes["button-wrapper"]}>
             <Button className="save" variant="icon" type="submit">
               <Check />
@@ -259,7 +272,110 @@ export default function AdminTable({ membersList }: AdminTableProps) {
               <CloseMark />
             </Button>
           </div>
-        </td>
+        </AdminTableCell>
+      </>
+    );
+  }
+
+  function renderDesktopHeaders() {
+    return (
+      <>
+        <AdminTableCell
+          className={classNames(classes["table-th"], classes["th-name"])}
+          Element="th"
+        >
+          Name
+        </AdminTableCell>
+        <AdminTableCell
+          className={classNames(classes["table-th"], classes["th-email"])}
+          Element="th"
+        >
+          Email
+        </AdminTableCell>
+        <AdminTableCell
+          className={classNames(classes["table-th"], classes["th-role"])}
+          Element="th"
+        >
+          Role
+        </AdminTableCell>
+      </>
+    );
+  }
+
+  function renderMobileHeaders() {
+    return (
+      <>
+        <AdminTableCell
+          className={classNames(
+            classes["table-th"],
+            classes["th-role"],
+            "text-center"
+          )}
+          Element="th"
+        >
+          Role
+        </AdminTableCell>
+        <AdminTableCell
+          className={classNames(
+            classes["table-th"],
+            classes["th-name"],
+            "text-center"
+          )}
+          Element="th"
+        >
+          User
+        </AdminTableCell>
+      </>
+    );
+  }
+
+  function renderDesktopDetailsRow(user: User) {
+    return (
+      <>
+        <AdminTableCell
+          className={classNames(classes["table-td"], classes["td-name"])}
+        >
+          {user.name}
+        </AdminTableCell>
+        <AdminTableCell
+          className={classNames(classes["table-td"], classes["td-email"])}
+        >
+          {user.email}
+        </AdminTableCell>
+        <AdminTableCell
+          className={classNames(classes["table-td"], classes["td-role"])}
+        >
+          {user.role}
+        </AdminTableCell>
+      </>
+    );
+  }
+
+  function renderMobileDetailsRow(user: User) {
+    return (
+      <>
+        <AdminTableCell
+          className={classNames(
+            classes["table-td"],
+            classes["td-role"],
+            classes["role-icon"]
+          )}
+          title={user.role}
+        >
+          <div className={classes["icon-wrapper"]}>
+            {user.role === "admin" ? <UserGear /> : <UserIcon />}
+          </div>
+        </AdminTableCell>
+        <AdminTableCell
+          className={classNames(
+            classes["table-td"],
+            classes["td-name"],
+            "text-center"
+          )}
+        >
+          <p>{user.name}</p>
+          <p>{user.email}</p>
+        </AdminTableCell>
       </>
     );
   }
@@ -272,7 +388,14 @@ export default function AdminTable({ membersList }: AdminTableProps) {
       <table className={classes["table"]}>
         <thead className={classes["table-thead"]}>
           <tr className={classes["table-tr"]}>
-            <th className={classNames(classes["table-th"], "text-center")}>
+            <AdminTableCell
+              className={classNames(
+                classes["table-th"],
+                "text-center",
+                classes["th-select"]
+              )}
+              Element="th"
+            >
               {membersListLength > 0 && (
                 <input
                   ref={selectAllCheckboxRef}
@@ -281,13 +404,18 @@ export default function AdminTable({ membersList }: AdminTableProps) {
                   checked={selectedMemberIds.size === membersList?.length}
                 />
               )}
-            </th>
-            <th className={classes["table-th"]}>Name</th>
-            <th className={classes["table-th"]}>Email</th>
-            <th className={classes["table-th"]}>Role</th>
-            <th className={classNames(classes["table-th"], "text-center")}>
+            </AdminTableCell>
+            {!isMobile ? renderDesktopHeaders() : renderMobileHeaders()}
+            <AdminTableCell
+              className={classNames(
+                classes["table-th"],
+                "text-center",
+                classes["th-actions"]
+              )}
+              Element="th"
+            >
               Actions
-            </th>
+            </AdminTableCell>
           </tr>
         </thead>
         <tbody className={classes["table-tbody"]}>

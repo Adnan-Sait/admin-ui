@@ -24,23 +24,23 @@
   padding-block: 15px;
 }
 
-.table-th:nth-child(1) {
+.th-select {
   width: 10%;
 }
 
-.table-th:nth-child(2) {
+.th-name {
   width: 25%;
 }
 
-.table-th:nth-child(3) {
+.th-email {
   width: 30%;
 }
 
-.table-th:nth-child(4) {
+.th-role {
   width: 15%;
 }
 
-.table-th:nth-child(5) {
+.th-actions {
   width: 20%;
 }
 
@@ -90,4 +90,46 @@
 
 .delete-button {
   white-space: pre;
+}
+
+@media (max-width: 768px) {
+  .th-role {
+    width: 15%;
+  }
+
+  .th-name {
+    width: 55%;
+  }
+
+  .td-role {
+    position: relative;
+  }
+
+  .td-role > .icon-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .td-role svg {
+    height: 24px;
+    width: 24px;
+    fill: var(--app-color-text-white);
+    flex-shrink: 0;
+  }
+
+  .td-role.role-icon:hover::after {
+    content: attr(title);
+    font-size: var(--app-sizes-size-12);
+    display: block;
+    background-color: var(--app-color-gray-700);
+    padding: 5px;
+    border-radius: var(--app-border-radius-medium);
+
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+
+    transform: translateX(-50%);
+  }
 }
