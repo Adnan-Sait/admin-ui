@@ -313,6 +313,8 @@ export default function AdminTable({ membersList }: AdminTableProps) {
       <>
         <AdminTableCell
           className={classNames(classes["table-td"], classes["td-name"])}
+          scope="row"
+          Element="th"
         >
           {user.name}
         </AdminTableCell>
@@ -351,6 +353,8 @@ export default function AdminTable({ membersList }: AdminTableProps) {
             classes["td-name"],
             "text-center"
           )}
+          scope="row"
+          Element="th"
         >
           <p className="mb-1">{user.name}</p>
           <p>{user.email}</p>
