@@ -1,9 +1,25 @@
 .admin-header {
   display: flex;
+  gap: 15px;
   justify-content: space-between;
   align-items: center;
   background-color: var(--app-color-primary-dark-500);
   padding: 10px 20px;
   border-top-left-radius: var(--app-border-radius-medium);
   border-top-right-radius: var(--app-border-radius-medium);
+}
+
+@media (max-width: 768px) {
+  .admin-header {
+    flex-wrap: wrap;
+    padding-bottom: 15px;
+  }
+
+  .admin-header > * {
+    flex: 1 1 100%;
+  }
+
+  .row-count {
+    text-align: end;
+  }
 }

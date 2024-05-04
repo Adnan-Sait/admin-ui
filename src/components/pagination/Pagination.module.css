@@ -1,14 +1,16 @@
 .pagination {
-  display: grid;
-  grid-auto-columns: minmax(0, 1fr);
-  grid-auto-flow: column;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
   gap: 10px;
 }
 
 .pagination :global(button) {
   padding: 5px;
   color: var(--app-color-text-white);
-  border-radius: var(--app-border-radius-rounded);
+  height: 34px;
+  min-width: 34px;
+  border-radius: 17px;
 }
 
 .pagination .active {
