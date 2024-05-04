@@ -25,7 +25,7 @@ export default function useWindowSize(): WindowSize {
       };
       setWindowSize(size);
     }
-
+    handleWindowResize();
     window.addEventListener("resize", handleWindowResize);
 
     return () => {
