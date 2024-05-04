@@ -19,6 +19,7 @@ import Check from "../../ui/icons/Check";
 import CloseMark from "../../ui/icons/CloseMark";
 
 import classes from "./AdminTable.module.css";
+import useWindowSize from "../../hooks/useWindowSize";
 
 type AdminTableProps = {
   membersList: User[] | undefined;
@@ -53,6 +54,9 @@ export default function AdminTable({ membersList }: AdminTableProps) {
   );
   const [editId, setEditId] = useState<string | null>(null);
 
+  const { width: windowWidth } = useWindowSize();
+
+  const isMobile = windowWidth && windowWidth <= 768;
   const membersListLength = membersList?.length ?? 0;
 
   // When members list changes, clear the selection.
