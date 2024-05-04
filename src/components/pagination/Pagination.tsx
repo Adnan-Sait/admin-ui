@@ -88,6 +88,7 @@ export default function Pagination({
         onClick={handleFirstPage}
         disabled={activePage === 1}
       >
+        <span className="sr-only">Go to first page</span>
         <DoubleChevronLeft />
       </Button>
       <Button
@@ -96,6 +97,7 @@ export default function Pagination({
         onClick={handlePreviousPage}
         disabled={activePage === 1}
       >
+        <span className="sr-only">Go to previous page</span>
         <ChevronLeft />
       </Button>
       {pages.map((num) => (
@@ -105,6 +107,7 @@ export default function Pagination({
           key={num}
           onClick={(event) => handlePageSelection(event, num)}
         >
+          <span className="sr-only">Go to page</span>
           {num}
         </Button>
       ))}
@@ -114,6 +117,7 @@ export default function Pagination({
         onClick={handleNextPage}
         disabled={activePage === lastPage}
       >
+        <span className="sr-only">Go to next page</span>
         <ChevronRight />
       </Button>
       <Button
@@ -122,6 +126,7 @@ export default function Pagination({
         onClick={handleLastPage}
         disabled={activePage === lastPage}
       >
+        <span className="sr-only">Go to last page</span>
         <DoubleChevronRight />
       </Button>
     </section>

@@ -9,3 +9,14 @@
 .mb-3 {
   margin-bottom: 1rem !important;
 }
+
+.sr-only {
+  display: block;
+  height: 1px;
+  width: 1px;
+  padding: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  border: 0;
+  position: absolute;
+}
