@@ -194,6 +194,7 @@ export default function AdminTable({ membersList }: AdminTableProps) {
         >
           <input
             type="checkbox"
+            name="selectAll"
             checked={selectedMemberIds.has(user.id)}
             onChange={(event) => handleSelectMember(event, user.id)}
           />
@@ -444,6 +445,7 @@ export default function AdminTable({ membersList }: AdminTableProps) {
                 <input
                   ref={selectAllCheckboxRef}
                   type="checkbox"
+                  name="selectUser"
                   onChange={handleSelectAllMembers}
                   checked={selectedMemberIds.size === membersList?.length}
                 />
