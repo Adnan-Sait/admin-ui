@@ -1,7 +1,7 @@
-import { PropsWithChildren, TableHTMLAttributes } from "react";
+import { PropsWithChildren, TdHTMLAttributes } from "react";
 
 type AdminTableCellProps = PropsWithChildren<
-  TableHTMLAttributes<HTMLTableCellElement>
+  TdHTMLAttributes<HTMLTableCellElement>
 > & {
   // Controls the rendering of the element.
   show?: boolean;
