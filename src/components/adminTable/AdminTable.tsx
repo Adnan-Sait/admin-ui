@@ -231,35 +231,7 @@ export default function AdminTable({ membersList }: AdminTableProps) {
         <AdminTableCell
           className={classNames(classes["table-td"], "text-center")}
         ></AdminTableCell>
-        <AdminTableCell className={classes["table-td"]}>
-          <input
-            className={classes["form-input"]}
-            autoFocus
-            type="text"
-            name="name"
-            defaultValue={user.name}
-          />
-        </AdminTableCell>
-        <AdminTableCell className={classes["table-td"]}>
-          <input
-            className={classes["form-input"]}
-            type="text"
-            name="email"
-            defaultValue={user.email}
-          />
-        </AdminTableCell>
-        <AdminTableCell
-          className={classNames(classes["table-td"], classes["td-role"])}
-        >
-          <select
-            className={classes["form-input"]}
-            name="role"
-            defaultValue={user.role}
-          >
-            <option value="member">Member</option>
-            <option value="admin">Admin</option>
-          </select>
-        </AdminTableCell>
+        {!isMobile ? renderDeskopEditRow(user) : renderMobileEditRow(user)}
         <AdminTableCell className={classes["table-td"]}>
           <div className={classes["button-wrapper"]}>
             <Button className="save" variant="icon" type="submit">
@@ -374,8 +346,79 @@ export default function AdminTable({ membersList }: AdminTableProps) {
             "text-center"
           )}
         >
-          <p>{user.name}</p>
+          <p className="mb-1">{user.name}</p>
           <p>{user.email}</p>
+        </AdminTableCell>
+      </>
+    );
+  }
+
+  function renderDeskopEditRow(user: User) {
+    return (
+      <>
+        <AdminTableCell className={classes["table-td"]}>
+          <input
+            className={classes["form-input"]}
+            autoFocus
+            type="text"
+            name="name"
+            defaultValue={user.name}
+          />
+        </AdminTableCell>
+        <AdminTableCell className={classes["table-td"]}>
+          <input
+            className={classes["form-input"]}
+            type="text"
+            name="email"
+            defaultValue={user.email}
+          />
+        </AdminTableCell>
+        <AdminTableCell
+          className={classNames(classes["table-td"], classes["td-role"])}
+        >
+          <select
+            className={classes["form-input"]}
+            name="role"
+            defaultValue={user.role}
+          >
+            <option value="member">Member</option>
+            <option value="admin">Admin</option>
+          </select>
+        </AdminTableCell>
+      </>
+    );
+  }
+
+  function renderMobileEditRow(user: User) {
+    return (
+      <>
+        <AdminTableCell
+          className={classNames(classes["table-td"], classes["td-role"])}
+        >
+          <select
+            className={classes["form-input"]}
+            name="role"
+            defaultValue={user.role}
+          >
+            <option value="member">Member</option>
+            <option value="admin">Admin</option>
+          </select>
+        </AdminTableCell>
+        <AdminTableCell className={classes["table-td"]}>
+          <input
+            className={classNames(classes["form-input"], "mb-3")}
+            autoFocus
+            type="text"
+            name="name"
+            defaultValue={user.name}
+          />
+
+          <input
+            className={classes["form-input"]}
+            type="text"
+            name="email"
+            defaultValue={user.email}
+          />
         </AdminTableCell>
       </>
     );

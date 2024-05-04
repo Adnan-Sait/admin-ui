@@ -82,6 +82,7 @@
 
 .form-input {
   min-width: 80%;
+  max-width: 100%;
 }
 
 .delete-btn-wrapper {
