@@ -64,6 +64,7 @@ export default function AdminTable({ membersList }: AdminTableProps) {
 
   // When members list changes, clear the selection.
   useEffect(() => {
+    setEditId(null);
     setSelectedMemberIds(new Set());
   }, [membersList]);
 
