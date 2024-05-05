@@ -209,7 +209,7 @@ export default function AdminTable({ membersList }: AdminTableProps) {
           <input
             type="checkbox"
             name="selectUser"
-            aria-label={user.name}
+            aria-label={"Select User"}
             checked={selectedMemberIds.has(user.id)}
             onChange={(event) => handleSelectMember(event, user.id)}
           />
@@ -463,10 +463,8 @@ export default function AdminTable({ membersList }: AdminTableProps) {
                 classes["th-select"]
               )}
               Element="th"
+              aria-label="Select User"
             >
-              <span className="sr-only" id="selectAllLabel">
-                Select All Users
-              </span>
               {membersListLength > 0 && (
                 <>
                   <input
@@ -475,7 +473,7 @@ export default function AdminTable({ membersList }: AdminTableProps) {
                     name="selectAll"
                     onChange={handleSelectAllMembers}
                     checked={selectedMemberIds.size === membersList?.length}
-                    aria-labelledby="selectAllLabel"
+                    aria-label="Select All Users"
                   />
                 </>
               )}
