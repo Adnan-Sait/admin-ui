@@ -10,12 +10,12 @@
 }
 
 .variant--primary {
-  background-color: var(--app-color-accent-yellow-200);
+  background-color: var(--app-color-accent-yellow-600);
   border: 2px solid var(--app-color-accent-yellow);
 }
 
 .variant--primary:hover {
-  background-color: var(--app-color-accent-yellow);
+  background-color: var(--app-color-accent-yellow-600);
 }
 
 .variant--secondary {
@@ -47,8 +47,8 @@
 
 .button:disabled {
   border-color: var(--app-color-gray-400);
-  background-color: var(--app-color-gray-400);
-  opacity: 0.5;
+  background-color: var(--app-color-gray-600);
+  opacity: 0.7;
   pointer-events: none;
   transition: none;
 }

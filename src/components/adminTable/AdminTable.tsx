@@ -77,6 +77,20 @@ export default function AdminTable({ membersList }: AdminTableProps) {
     selectAllCheckboxRef.current.indeterminate = isIndeterminate;
   }, [selectedMemberIds, membersListLength]);
 
+  // Resets edit on user selection.
+  useEffect(() => {
+    if (selectedMemberIds.size > 0) {
+      setEditId(null);
+    }
+  }, [selectedMemberIds]);
+
+  // Resets selected members on edit action.
+  useEffect(() => {
+    if (editId) {
+      setSelectedMemberIds(new Set());
+    }
+  }, [editId]);
+
   function handleSelectMember(
     event: ChangeEvent<HTMLInputElement>,
     memberId: string
@@ -194,7 +208,8 @@ export default function AdminTable({ membersList }: AdminTableProps) {
         >
           <input
             type="checkbox"
-            name="selectAll"
+            name="selectUser"
+            aria-label={"Select User"}
             checked={selectedMemberIds.has(user.id)}
             onChange={(event) => handleSelectMember(event, user.id)}
           />
@@ -211,6 +226,7 @@ export default function AdminTable({ membersList }: AdminTableProps) {
               className="edit"
               onClick={(event) => handleEditUser(event, user)}
             >
+              <span className="sr-only">Edit User {user.name}</span>
               <PencilSquare />
             </Button>
             <Button
@@ -218,6 +234,7 @@ export default function AdminTable({ membersList }: AdminTableProps) {
               className={classNames("delete", classes["trash-icon"])}
               onClick={handleMemberDelete.bind(null, user)}
             >
+              <span className="sr-only">Delete User {user.name}</span>
               <Trash />
             </Button>
           </div>
@@ -236,6 +253,7 @@ export default function AdminTable({ membersList }: AdminTableProps) {
         <AdminTableCell className={classes["table-td"]}>
           <div className={classes["button-wrapper"]}>
             <Button className="save" variant="icon" type="submit">
+              <span className="sr-only">Save Changes ({user.name})</span>
               <Check />
             </Button>
             <Button
@@ -243,6 +261,7 @@ export default function AdminTable({ membersList }: AdminTableProps) {
               className={classes["trash-icon"]}
               onClick={handleCloseEdit}
             >
+              <span className="sr-only">Clear Changes ({user.name})</span>
               <CloseMark />
             </Button>
           </div>
@@ -308,6 +327,8 @@ export default function AdminTable({ membersList }: AdminTableProps) {
       <>
         <AdminTableCell
           className={classNames(classes["table-td"], classes["td-name"])}
+          scope="row"
+          Element="th"
         >
           {user.name}
         </AdminTableCell>
@@ -346,6 +367,8 @@ export default function AdminTable({ membersList }: AdminTableProps) {
             classes["td-name"],
             "text-center"
           )}
+          scope="row"
+          Element="th"
         >
           <p className="mb-1">{user.name}</p>
           <p>{user.email}</p>
@@ -440,15 +463,19 @@ export default function AdminTable({ membersList }: AdminTableProps) {
                 classes["th-select"]
               )}
               Element="th"
+              aria-label="Select User"
             >
               {membersListLength > 0 && (
-                <input
-                  ref={selectAllCheckboxRef}
-                  type="checkbox"
-                  name="selectUser"
-                  onChange={handleSelectAllMembers}
-                  checked={selectedMemberIds.size === membersList?.length}
-                />
+                <>
+                  <input
+                    ref={selectAllCheckboxRef}
+                    type="checkbox"
+                    name="selectAll"
+                    onChange={handleSelectAllMembers}
+                    checked={selectedMemberIds.size === membersList?.length}
+                    aria-label="Select All Users"
+                  />
+                </>
               )}
             </AdminTableCell>
             {!isMobile ? renderDesktopHeaders() : renderMobileHeaders()}

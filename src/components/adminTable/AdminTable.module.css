@@ -61,6 +61,10 @@
   background-color: var(--app-color-shadow-primary-dark-100);
 }
 
+.td-name {
+  font-weight: var(--app-font-weight-400);
+}
+
 .td-role {
   text-transform: capitalize;
 }
