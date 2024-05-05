@@ -102,8 +102,8 @@ export default function Pagination({
       </Button>
       {pages.map((num) => (
         <Button
-          className={classNames(num, { [classes.active]: activePage === num })}
-          variant="secondary"
+          className={classNames(num)}
+          variant={activePage === num ? "primary" : "secondary"}
           key={num}
           onClick={(event) => handlePageSelection(event, num)}
         >
