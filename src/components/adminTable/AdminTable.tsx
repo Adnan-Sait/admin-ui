@@ -77,6 +77,20 @@ export default function AdminTable({ membersList }: AdminTableProps) {
     selectAllCheckboxRef.current.indeterminate = isIndeterminate;
   }, [selectedMemberIds, membersListLength]);
 
+  // Resets edit on user selection.
+  useEffect(() => {
+    if (selectedMemberIds.size > 0) {
+      setEditId(null);
+    }
+  }, [selectedMemberIds]);
+
+  // Resets selected members on edit action.
+  useEffect(() => {
+    if (editId) {
+      setSelectedMemberIds(new Set());
+    }
+  }, [editId]);
+
   function handleSelectMember(
     event: ChangeEvent<HTMLInputElement>,
     memberId: string
