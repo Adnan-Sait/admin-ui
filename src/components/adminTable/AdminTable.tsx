@@ -454,6 +454,7 @@ export default function AdminTable({ membersList }: AdminTableProps) {
       onSubmit={handleMemberUpdate}
     >
       <table className={classes["table"]}>
+        <caption className="sr-only">Admin Table</caption>
         <thead className={classes["table-thead"]}>
           <tr className={classes["table-tr"]}>
             <AdminTableCell
