@@ -29,7 +29,7 @@ export default function Progress({
   const isComplete = type === "increment" ? value >= max : value <= 0;
 
   useEffect(() => {
-    let intervalId: number;
+    let intervalId: number | NodeJS.Timeout;
     if (!isComplete) {
       intervalId = setInterval(() => {
         setValue((state) => state + deltaValue);
