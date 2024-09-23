@@ -5,7 +5,16 @@ import { fn } from "@storybook/test";
 const meta: Meta<typeof Button> = {
   title: "Button",
   component: Button,
-  argTypes: { type: { type: "string" } },
+  args: {
+    children: "Hello World",
+  },
+  argTypes: {
+    type: {
+      control: "radio",
+      type: "string",
+      options: ["submit", "reset", "button"],
+    },
+  },
 };
 export default meta;
 
@@ -16,5 +25,11 @@ export const Primary: Story = {
     variant: "primary",
     children: "Hello World",
     onClick: fn(),
+  },
+};
+
+export const ClickLog: Story = {
+  args: {
+    onClick: () => console.log("Hello World"),
   },
 };

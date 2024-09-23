@@ -10,7 +10,7 @@ function PaginationWrapper(props: Parameters<typeof Pagination>[0]) {
     <Pagination
       {...props}
       activePage={activePage}
-      setActivePage={setActivePage}
+      setActivePage={fn(setActivePage)}
     />
   );
 }
@@ -20,7 +20,11 @@ const meta: Meta<typeof Pagination> = {
   component: Pagination,
   args: {
     setActivePage: fn(),
+    activePage: 1,
   },
+  decorators: [
+    (story) => <div style={{ border: "1px solid #ccc" }}>{story()}</div>,
+  ],
 };
 
 export default meta;
@@ -60,9 +64,7 @@ export const ManyPages: Story = {
 
 export const Page: Story = {
   name: "Page Change",
-  render: (props: Parameters<typeof Pagination>[0]) => (
-    <PaginationWrapper {...props} />
-  ),
+  render: (props) => <PaginationWrapper {...props} />,
   args: {
     itemsPerPage: 10,
     totalCount: 50,
